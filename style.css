@@ -146,10 +146,17 @@ button:hover{
 }
 
 .rating{
+    display:block;
     font-size:25px;
     font-weight:bold;
-    margin:10px;
     color:#FFD700;
+    margin:10px 0;
+}
+.player-card p{
+    display:block;
+    color:white;
+    font-size:18px;
+    margin:8px 0;
 }
 
 .dashboard{
