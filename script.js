@@ -1,6 +1,11 @@
 let squadCount = 0;
 let budget = 100000;
 let transferWindowOpen = true;
+// Transfer window closes 14 days from opening
+const deadline = new Date();
+
+// Add 14 days
+deadline.setDate(deadline.getDate() + 14);
 const squads = {
   BPHARM: [
     "Isaac Soyekwo",
@@ -270,3 +275,42 @@ function toggleWindow() {
     }
 
       }
+function updateCountdown() {
+
+    const now = new Date();
+
+    const difference = deadline - now;
+
+    if (difference <= 0) {
+
+        transferWindowOpen = false;
+
+        document.getElementById("windowStatus").innerHTML =
+        "🔴 TRANSFER WINDOW CLOSED";
+
+        document.getElementById("windowStatus").style.color = "red";
+
+        document.getElementById("countdown").innerHTML =
+        "Transfer deadline has passed.";
+
+        return;
+    }
+
+    let days = Math.floor(difference / (1000 * 60 * 60 * 24));
+
+    let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+
+    let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML =
+    "⏳ " +
+    days + " Days " +
+    hours + " Hours " +
+    minutes + " Minutes " +
+    seconds + " Seconds Remaining";
+}
+updateCountdown();
+
+setInterval(updateCountdown, 1000);
