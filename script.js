@@ -121,7 +121,29 @@ button.textContent = "✅ Signed";
 button.disabled = true;
 
 document.getElementById("budget").textContent = budget;
+// Move player between squads
 
+let newClub = document.getElementById("clubSelect").value;
+
+if(newClub !== "" && playerTeams[playerName]){
+
+let oldClub = playerTeams[playerName];
+
+let index = squads[oldClub].indexOf(playerName);
+
+if(index !== -1){
+
+squads[oldClub].splice(index, 1);
+
+}
+
+squads[newClub].push(playerName);
+
+playerTeams[playerName] = newClub;
+
+alert(playerName + " transferred to " + newClub);
+
+}
 
 }
 
