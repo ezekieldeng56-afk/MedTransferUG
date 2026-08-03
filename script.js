@@ -67,6 +67,32 @@ const squads = {
     "Ndagije Christine"
   ]
 };
+const playerTeams = {
+
+    "Isaac Soyekwo": "BPHARM",
+    "Ebenezer Wamezaya": "BPHARM",
+    "Joel Nuwamanya": "BPHARM",
+    "Nagitta Resty": "BPHARM",
+
+    "Phoebe Treasure": "BDS",
+
+    "Deng Ezekiel": "BNUR",
+    "Agaba Vincent": "BNUR",
+
+    "Lucky Godwin": "BSLT",
+
+    "Abhinava Raval": "BMAM",
+    "Shon Uncle": "BMAM",
+    "Gilbert Ayesigamukama": "BMAM",
+    "Collins Abaasa": "BMAM",
+
+    "Odeke Andrew": "BMR",
+
+    "Eluru Chris": "BOPT",
+
+    "Onzima Alex": "BCYT",
+    "Kasalirwe Derrick": "BCYT"
+};
 function signPlayer(playerName, fee, position, buttonId){
 
 alert("Button working");
