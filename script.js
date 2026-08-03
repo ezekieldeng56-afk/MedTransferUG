@@ -129,3 +129,25 @@ function closeProfile(){
 document.getElementById("profileModal").style.display="none";
 
 }
+function showSquad() {
+
+    const course = document.getElementById("squadSelect").value;
+    const squadList = document.getElementById("squadList");
+
+    if (course === "") {
+        squadList.innerHTML = "";
+        return;
+    }
+
+    let html = "<h3>" + course + " Squad</h3>";
+    html += "<p>Total Players: " + squads[course].length + "</p>";
+    html += "<ul>";
+
+    squads[course].forEach(function(player) {
+        html += "<li>" + player + "</li>";
+    });
+
+    html += "</ul>";
+
+    squadList.innerHTML = html;
+}
