@@ -135,7 +135,11 @@ let newClub = document.getElementById("clubSelect").value;
 let oldClub = playerTeams[playerName];
 
 if (newClub === oldClub) {
-    alert(playerName + " already belongs to " + oldClub + ".");
+    alert("❌ Transfer Rejected!\n\n" +
+      playerName +
+      " is already a " +
+      oldClub +
+      " player.");
     return;
 }
 if(newClub !== "" && playerTeams[playerName]){
