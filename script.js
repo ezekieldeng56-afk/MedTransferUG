@@ -95,7 +95,10 @@ const playerTeams = {
     "Kasalirwe Derrick": "BCYT"
 };
 function signPlayer(playerName, fee, position, buttonId){
-
+if (!transferWindowOpen) {
+    alert("The transfer window is CLOSED.");
+    return;
+}
 alert("Button working");
 
 
@@ -224,3 +227,18 @@ function showSquad() {
 
     squadList.innerHTML = html;
 }
+function toggleWindow() {
+
+    transferWindowOpen = !transferWindowOpen;
+
+    let status = document.getElementById("windowStatus");
+
+    if (transferWindowOpen) {
+        status.innerHTML = "🟢 OPEN";
+        status.style.color = "green";
+    } else {
+        status.innerHTML = "🔴 CLOSED";
+        status.style.color = "red";
+    }
+
+      }
