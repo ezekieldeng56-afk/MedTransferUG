@@ -139,15 +139,27 @@ function showSquad() {
         return;
     }
 
-    let html = "<h3>" + course + " Squad</h3>";
-    html += "<p>Total Players: " + squads[course].length + "</p>";
-    html += "<ul>";
+    let html = `
+    <div class="squad-box">
+        <h3>${course} Squad</h3>
+        <p>Total Players: ${squads[course].length}</p>
+        <div class="squad-players">
+    `;
 
     squads[course].forEach(function(player) {
-        html += "<li>" + player + "</li>";
+
+        html += `
+        <div class="squad-player">
+            👤 ${player}
+        </div>
+        `;
+
     });
 
-    html += "</ul>";
+    html += `
+        </div>
+    </div>
+    `;
 
     squadList.innerHTML = html;
 }
