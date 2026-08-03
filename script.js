@@ -311,6 +311,10 @@ function updateCountdown() {
     minutes + " Minutes " +
     seconds + " Seconds Remaining";
 }
-updateCountdown();
+window.onload = function() {
 
-setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    setInterval(updateCountdown, 1000);
+
+};
