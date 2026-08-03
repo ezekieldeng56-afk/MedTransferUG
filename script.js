@@ -22,7 +22,7 @@ const squads = {
   ],
 
   BNUR: [
-    "Ezekiel Deng",
+    "Deng Ezekiel",
     "Agaba Vincent",
     "Mutyaba Moses",
     "Gideon Cherop",
