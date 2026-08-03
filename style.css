@@ -250,3 +250,23 @@ margin-top:40px;
 .squad-box h3 {
     color: black;
 }
+#squadList {
+    color: black;
+    background: white;
+}
+
+.squad-box {
+    color: black;
+    background: white;
+}
+
+.squad-box h3,
+.squad-box p {
+    color: black;
+}
+
+.squad-player {
+    color: black;
+    background: white;
+    border: 1px solid #ccc;
+}
