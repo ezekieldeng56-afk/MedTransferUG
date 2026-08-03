@@ -128,6 +128,10 @@ document.getElementById("budget").textContent = budget;
 // Move player between squads
 
 let newClub = document.getElementById("clubSelect").value;
+  if (newClub === "") {
+    alert("Please select your club first.");
+    return;
+  }
 let oldClub = playerTeams[playerName];
 
 if (newClub === oldClub) {
