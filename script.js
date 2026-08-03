@@ -2,7 +2,7 @@ let squadCount = 0;
 let budget = 100000;
 const squads = {
   BPHARM: [
-    "Soyekwo Isaac",
+    "Isaac Soyekwo",
     "Ebenezer Wamezaya",
     "Joel Nuwamanya",
     "Nagitta Resty",
