@@ -239,3 +239,14 @@ margin-top:40px;
     border-radius: 8px;
     border: 1px solid #ddd;
 }
+.squad-player {
+    color: black;
+}
+
+.squad-box {
+    color: black;
+}
+
+.squad-box h3 {
+    color: black;
+}
