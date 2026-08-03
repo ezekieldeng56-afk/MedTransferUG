@@ -1,6 +1,72 @@
 let squadCount = 0;
 let budget = 100000;
+const squads = {
+  BPHARM: [
+    "Soyekwo Isaac",
+    "Ebenezer Wamezaya",
+    "Joel Nuwamanya",
+    "Nagitta Resty",
+    "Kabuye John Joash",
+    "Musinguzi Peter",
+    "Serunkuuma Tariq"
+  ],
 
+  BDS: [
+    "Augustine Maximillian",
+    "Phoebe Treasure",
+    "Araphat Chemical",
+    "Busuulwa Asraph",
+    "Mondo Daniel",
+    "Mungudit Moses",
+    "Ojula Emmanuel"
+  ],
+
+  BNUR: [
+    "Ezekiel Deng",
+    "Agaba Vincent",
+    "Mutyaba Moses",
+    "Gideon Cherop",
+    "Gideon Musika"
+  ],
+
+  BMR: [
+    "Odeke Andrew",
+    "Koxy Acram",
+    "Lionel Cassey"
+  ],
+
+  BSLT: [
+    "Lucky Godwin",
+    "Lutaaya Kevin"
+  ],
+
+  BMAM: [
+    "Abhinava Raval",
+    "Shon Uncle",
+    "Gilbert Ayesigamukama",
+    "Collins Abaasa"
+  ],
+
+  BBSB: [
+    "Allan Odoch",
+    "Wejuli Jeremiah",
+    "Andres Kenan",
+    "Opset Emma",
+    "Shakur 2Pac"
+  ],
+
+  BCYT: [
+    "Martin Magandaazi",
+    "Onzima Alex",
+    "Kasalirwe Derrick"
+  ],
+
+  BOPT: [
+    "Machar Bol",
+    "Eluru Chris",
+    "Ndagije Christine"
+  ]
+};
 function signPlayer(playerName, fee, position, buttonId){
 
 alert("Button working");
