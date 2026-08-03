@@ -1,5 +1,6 @@
 let squadCount = 0;
 let budget = 100000;
+let transferWindowOpen = true;
 const squads = {
   BPHARM: [
     "Isaac Soyekwo",
