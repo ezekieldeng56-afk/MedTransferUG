@@ -217,3 +217,25 @@ padding:20px;
 margin-top:40px;
 
 }
+.squad-box {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #f5f5f5;
+}
+
+.squad-box h3 {
+    text-align: center;
+}
+
+.squad-players {
+    display: grid;
+    gap: 10px;
+}
+
+.squad-player {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
