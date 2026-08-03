@@ -130,7 +130,6 @@ document.getElementById("profileModal").style.display="none";
 
 }
 function showSquad() {
-    alert("Working");
 
     const course = document.getElementById("squadSelect").value;
     const squadList = document.getElementById("squadList");
