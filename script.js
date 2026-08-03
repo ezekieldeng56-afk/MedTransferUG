@@ -157,6 +157,21 @@ transfer.textContent =
 playerName + " : " + oldClub + " ➜ " + newClub;
 
 history.prepend(transfer);
+  let news = document.getElementById("transferNews");
+
+if (news.innerText === "No transfer news yet.") {
+    news.innerHTML = "";
+}
+
+let headline = document.createElement("p");
+
+headline.textContent =
+"🚨 BREAKING: " + playerName +
+" has completed a move from " +
+oldClub + " to " + newClub +
+" for UGX " + fee;
+
+news.prepend(headline);
 alert(playerName + " transferred to " + newClub);
 
 }
