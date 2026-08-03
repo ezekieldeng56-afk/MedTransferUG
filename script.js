@@ -140,7 +140,19 @@ squads[oldClub].splice(index, 1);
 squads[newClub].push(playerName);
 
 playerTeams[playerName] = newClub;
+let history = document.getElementById("transferHistory");
 
+if (history.firstElementChild &&
+    history.firstElementChild.textContent === "No transfers yet.") {
+    history.innerHTML = "";
+}
+
+let transfer = document.createElement("li");
+
+transfer.textContent =
+playerName + " : " + oldClub + " ➜ " + newClub;
+
+history.prepend(transfer);
 alert(playerName + " transferred to " + newClub);
 
 }
