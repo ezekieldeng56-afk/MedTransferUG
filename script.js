@@ -141,11 +141,6 @@ let player = document.createElement("li");
 player.textContent = playerName + " | " + position + " ✅ Signed";
 
 team.appendChild(player);
-let news = document.createElement("li");
-
-news.textContent = "🔥 Transfer: " + playerName + " moved to " + loggedInClub;
-
-document.getElementById("transferHistory").appendChild(news);
 
 squadCount = squadCount + 1;
 
@@ -173,7 +168,7 @@ if (newClub === oldClub) {
       " player.");
     return;
 }
-if(newClub !== "" && playerTeams[playerName]){
+    if(newClub !== ""){
 
 let oldClub = playerTeams[playerName];
 
