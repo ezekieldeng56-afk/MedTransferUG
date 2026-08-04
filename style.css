@@ -286,3 +286,15 @@ margin-top:40px;
     margin: 6px 0;
     border-bottom: 1px solid #ddd;
 }
+.dashboard{
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:12px;
+    margin-top:20px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+
+.dashboard h3{
+    color:#0066cc;
+}
