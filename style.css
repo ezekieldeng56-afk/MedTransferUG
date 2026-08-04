@@ -417,3 +417,43 @@ margin-top:40px;
     margin:2px;
     font-size:11px;
 }
+.player-card{
+    padding:5px;
+    line-height:1.1;
+}
+
+.player-image{
+    height:60px;
+}
+
+.player-image img{
+    height:60px;
+    width:100%;
+    object-fit:contain;
+}
+
+.player-card h3{
+    font-size:12px;
+    margin:2px 0;
+}
+
+.player-card .badge{
+    font-size:11px;
+    padding:2px 5px;
+}
+
+.player-card p{
+    font-size:12px;
+    margin:2px 0;
+}
+
+.player-card h2{
+    font-size:12px;
+    margin:2px 0;
+}
+
+.player-card button{
+    padding:3px 5px;
+    font-size:10px;
+    margin:1px;
+}
