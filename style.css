@@ -410,3 +410,24 @@ margin-top:40px;
     display:block;
     margin-top:20px;
 }
+.dashboard{
+    font-size:16px;
+    line-height:1.5;
+}
+
+.dashboard h3{
+    font-size:30px;
+}
+
+.dashboard p{
+    font-size:18px;
+}
+
+#transferNews{
+    font-size:16px;
+    line-height:1.4;
+}
+
+#transferNews p{
+    margin-bottom:15px;
+}
