@@ -176,7 +176,7 @@ let newClub = document.getElementById("clubSelect").value;
     return;
   }
 let oldClub = playerTeams[playerName];
-
+console.log(playerName, oldClub);
 if (newClub === oldClub) {
     alert("❌ Transfer Rejected!\n\n" +
       playerName +
