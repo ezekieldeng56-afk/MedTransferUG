@@ -6,6 +6,19 @@ const deadline = new Date();
 
 // Add 14 days
 deadline.setDate(deadline.getDate() + 14);
+let loggedIn = false;
+let loggedInClub = "";
+const managerPasswords = {
+    BPHARM: "BPHARM@2026",
+    BDS: "BDS@2026",
+    BNUR: "BNUR@2026",
+    BMR: "BMR@2026",
+    BSLT: "BSLT@2026",
+    BMAM: "BMAM@2026",
+    BBSB: "BBSB@2026",
+    BCYT: "BCYT@2026",
+    BOPT: "BOPT@2026"
+};
 const squads = {
   BPHARM: [
     "Isaac Soyekwo",
