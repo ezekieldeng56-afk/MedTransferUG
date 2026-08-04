@@ -361,7 +361,18 @@ window.onload = function() {
     updateCountdown();
 
     setInterval(updateCountdown, 1000);
+let savedLogin = localStorage.getItem("loggedIn");
+let savedClub = localStorage.getItem("loggedInClub");
 
+if(savedLogin === "true"){
+
+    loggedIn = true;
+    loggedInClub = savedClub;
+
+    document.getElementById("loginStatus").innerHTML =
+    "✅ Logged in as " + savedClub + " Manager";
+
+}
 };
 function loginManager(){
 
@@ -377,7 +388,8 @@ function loginManager(){
 
         loggedIn = true;
         loggedInClub = club;
-
+localStorage.setItem("loggedIn", "true");
+localStorage.setItem("loggedInClub", club);
         document.getElementById("loginStatus").innerHTML =
         "✅ Logged in as " + club + " Manager";
 
