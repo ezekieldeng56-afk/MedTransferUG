@@ -217,16 +217,6 @@ padding:20px;
 margin-top:40px;
 
 }
-.squad-box {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 10px;
-    background: #f5f5f5;
-}
-
-.squad-box h3 {
-    text-align: center;
-}
 
 .squad-players {
     display: grid;
@@ -243,26 +233,9 @@ margin-top:40px;
     color: black;
 }
 
-.squad-box {
-    color: black;
-}
-
-.squad-box h3 {
-    color: black;
-}
 #squadList {
     color: black;
     background: white;
-}
-
-.squad-box {
-    color: black;
-    background: white;
-}
-
-.squad-box h3,
-.squad-box p {
-    color: black;
 }
 
 .squad-player {
@@ -369,19 +342,14 @@ margin-top:40px;
 
 
 /* Compact Squad Display */
+
+
 .squad-box{
-    padding:10px;
-    margin-top:10px;
-}
-
-.squad-box h3{
-    font-size:18px;
-    margin:5px;
-}
-
-.squad-box p{
-    font-size:14px;
-    margin:5px;
+    background:white;
+    color:black;
+    padding:15px;
+    border-radius:15px;
+    margin-top:15px;
 }
 
 .squad-player{
@@ -411,23 +379,38 @@ margin-top:40px;
     margin-top:20px;
 }
 .dashboard{
-    font-size:16px;
-    line-height:1.5;
+    background:white;
+    color:black;
+    padding:15px;
+    margin:15px auto;
+    border-radius:15px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+    max-width:320px;
+    text-align:center;
 }
 
 .dashboard h3{
-    font-size:30px;
+    font-size:22px;
+    margin-bottom:10px;
+    color:#0066cc;
 }
 
 .dashboard p{
-    font-size:18px;
-}
-
-#transferNews{
     font-size:16px;
+    margin:8px 0;
     line-height:1.4;
+}#transferNews{
+    background:white;
+    color:black;
+    padding:15px;
+    border-radius:15px;
+    margin-top:15px;
+    font-size:15px;
+    line-height:1.5;
 }
 
 #transferNews p{
-    margin-bottom:15px;
+    margin-bottom:10px;
+    border-bottom:1px solid #ddd;
+    padding-bottom:8px;
 }
