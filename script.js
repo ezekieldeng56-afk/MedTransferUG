@@ -354,3 +354,30 @@ window.onload = function() {
     setInterval(updateCountdown, 1000);
 
 };
+function loginManager(){
+
+    let club = document.getElementById("clubSelect").value;
+    let password = document.getElementById("managerPassword").value;
+
+    if(club==""){
+        alert("Please select your club first.");
+        return;
+    }
+
+    if(password === managerPasswords[club]){
+
+        loggedIn = true;
+        loggedInClub = club;
+
+        document.getElementById("loginStatus").innerHTML =
+        "✅ Logged in as " + club + " Manager";
+
+        alert("Login successful!");
+
+    }else{
+
+        alert("Incorrect password.");
+
+    }
+
+}
