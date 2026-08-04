@@ -355,3 +355,31 @@ margin-top:40px;
     padding:8px;
     font-size:13px;
 }
+.player-card{
+    height:auto;
+    max-height:430px;
+    overflow:hidden;
+}
+
+.player-image{
+    height:100px;
+    overflow:hidden;
+}
+
+.player-image img{
+    height:100px;
+    width:100%;
+    object-fit:cover;
+}
+
+.player-card h2{
+    margin:3px 0;
+}
+
+.player-card h3{
+    margin:5px 0;
+}
+
+.player-card p{
+    margin:3px 0;
+    }
