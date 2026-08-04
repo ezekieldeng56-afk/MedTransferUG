@@ -323,28 +323,31 @@ margin-top:40px;
 
 }
 .player-card{
-    padding:10px;
-    font-size:14px;
+    padding:8px;
+    font-size:13px;
 }
 
 .player-image{
-    height:120px;
+    height:90px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .player-image img{
     width:100%;
-    height:120px;
+    height:90px;
     object-fit:contain;
 }
 
 .player-card h3{
-    font-size:16px;
-    margin:8px 0;
+    font-size:14px;
+    margin:4px 0;
 }
 
 .player-card h2{
-    font-size:16px;
-    margin:5px 0;
+    font-size:14px;
+    margin:3px 0;
 }
 
 .player-card p{
@@ -352,8 +355,8 @@ margin-top:40px;
 }
 
 .player-card button{
-    padding:8px;
-    font-size:13px;
+    padding:5px;
+    font-size:12px;
 }
 .player-card{
     height:auto;
