@@ -27,7 +27,11 @@ const squads = {
     "Nagitta Resty",
     "Kabuye John Joash",
     "Musinguzi Peter",
-    "Serunkuuma Tariq"
+    "Serunkuuma Tariq",
+      "Goodness Man",
+      "Joel",
+      "Magezi",
+      "Asiimwe Henry"
   ],
 
   BDS: [
@@ -37,7 +41,11 @@ const squads = {
     "Busuulwa Asraph",
     "Mondo Daniel",
     "Mungudit Moses",
-    "Ojula Emmanuel"
+    "Ojula Emmanuel",
+      "Ryan Gift",
+      "Kikaire Noah",
+      "Collins Adams",
+      "Mungudit Moses"
   ],
 
   BNUR: [
@@ -45,7 +53,9 @@ const squads = {
     "Agaba Vincent",
     "Mutyaba Moses",
     "Gideon Cherop",
-    "Gideon Musika"
+    "Gideon Musika",
+      "Sharon Newton",
+      "The Sadat"
   ],
 
   BMR: [
@@ -63,7 +73,10 @@ const squads = {
     "Abhinava Raval",
     "Shon Uncle",
     "Gilbert Ayesigamukama",
-    "Collins Abaasa"
+    "Collins Abaasa", 
+      "Cassey Breezy",
+      "Sheila Rhoda"
+      "Vaibhava Vignesh"
   ],
 
   BBSB: [
@@ -104,7 +117,7 @@ const playerTeams = {
     "Shon Uncle": "BMAM",
     "Gilbert Ayesigamukama": "BMAM",
     "Collins Abaasa": "BMAM",
-
+"Cassey Breezy":"BMAM",
     "Odeke Andrew": "BMR",
 
     "Eluru Chris": "BOPT",
