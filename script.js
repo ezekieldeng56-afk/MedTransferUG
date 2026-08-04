@@ -117,6 +117,15 @@ if (!transferWindowOpen) {
     alert("The transfer window is CLOSED.");
     return;
 }
+    if(!loggedIn){
+    alert("Please log in as a manager first.");
+    return;
+}
+
+if(loggedInClub !== document.getElementById("clubSelect").value){
+    alert("You can only manage your own club.");
+    return;
+}
 alert("Button working");
 
 
