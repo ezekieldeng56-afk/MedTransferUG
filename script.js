@@ -260,6 +260,29 @@ function showSquad() {
 
     squadList.innerHTML = html;
 }
+function updateDashboard(){
+
+    let club = document.getElementById("clubSelect").value;
+
+    if(club==""){
+        document.querySelector("#managerDashboard h3").textContent="No Club Selected";
+        return;
+    }
+
+    document.querySelector("#managerDashboard h3").textContent =
+    club + " Manager Dashboard";
+
+    document.getElementById("managerBudget").textContent = budget;
+
+    document.getElementById("managerTransfers").textContent = squadCount;
+
+    document.getElementById("managerSquad").textContent =
+    squads[club].length;
+
+    document.getElementById("managerWindow").textContent =
+    transferWindowOpen ? "🟢 OPEN" : "🔴 CLOSED";
+
+}
 function toggleWindow() {
 
     transferWindowOpen = !transferWindowOpen;
