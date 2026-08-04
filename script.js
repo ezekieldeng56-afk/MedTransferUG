@@ -75,7 +75,7 @@ const squads = {
     "Gilbert Ayesigamukama",
     "Collins Abaasa", 
       "Cassey Breezy",
-      "Sheila Rhoda"
+      "Sheila Rhoda",
       "Vaibhava Vignesh"
   ],
 
@@ -124,6 +124,9 @@ const playerTeams = {
 
     "Onzima Alex": "BCYT",
     "Kasalirwe Derrick": "BCYT"
+    "Asiimwe Henry": "BPHARM",
+"Allan Odoch": "BBSB",
+"Wejuli Jeremiah": "BBSB",
 };
 function signPlayer(playerName, fee, position, buttonId){
 if (!transferWindowOpen) {
