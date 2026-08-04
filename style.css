@@ -356,4 +356,52 @@ margin-top:40px;
 }
 
 }    
-    
+ /* Compact Transfer News */
+#transferHistory{
+    padding:10px;
+    font-size:14px;
+}
+
+#transferHistory li{
+    padding:5px;
+    margin:3px 0;
+}
+
+
+/* Compact Squad Display */
+.squad-box{
+    padding:10px;
+    margin-top:10px;
+}
+
+.squad-box h3{
+    font-size:18px;
+    margin:5px;
+}
+
+.squad-box p{
+    font-size:14px;
+    margin:5px;
+}
+
+.squad-player{
+    padding:6px;
+    font-size:14px;
+}
+
+
+/* Compact Manager Dashboard */
+.dashboard{
+    padding:12px;
+    margin-top:10px;
+}
+
+.dashboard h3{
+    font-size:18px;
+    margin:5px;
+}
+
+.dashboard p{
+    font-size:14px;
+    margin:5px;
+}   
