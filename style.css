@@ -386,3 +386,34 @@ margin-top:40px;
 .player-card p{
     margin:3px 0;
     }
+.player-card{
+    padding:6px;
+}
+
+.player-image{
+    height:75px;
+}
+
+.player-image img{
+    height:75px;
+}
+
+.player-card h3{
+    font-size:13px;
+    margin:3px 0;
+}
+
+.player-card h2{
+    font-size:13px;
+    margin:2px 0;
+}
+
+.player-card p{
+    margin:2px 0;
+}
+
+.player-card button{
+    padding:4px;
+    margin:2px;
+    font-size:11px;
+}
