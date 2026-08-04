@@ -126,7 +126,7 @@ if(loggedInClub !== document.getElementById("clubSelect").value){
     alert("You can only manage your own club.");
     return;
 }
-alert("Button working");
+
 
 
 if(budget >= fee){
@@ -184,6 +184,7 @@ squads[oldClub].splice(index, 1);
 squads[newClub].push(playerName);
 
 playerTeams[playerName] = newClub;
+        showSquad();
 let history = document.getElementById("transferHistory");
 
 if (history.firstElementChild &&
@@ -205,11 +206,16 @@ if (news.innerText === "No transfer news yet.") {
 
 let headline = document.createElement("p");
 
-headline.textContent =
-"🚨 BREAKING: " + playerName +
-" has completed a move from " +
-oldClub + " to " + newClub +
-" for UGX " + fee;
+headline.innerHTML =
+"🚨 <strong>BREAKING:</strong> " +
+playerName +
+" joins <strong>" +
+newClub +
+"</strong> from " +
+oldClub +
+" for <strong>UGX " +
+fee.toLocaleString() +
+"</strong>.";
 
 news.prepend(headline);
 alert(playerName + " transferred to " + newClub);
