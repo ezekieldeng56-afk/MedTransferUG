@@ -271,7 +271,7 @@ function updateDashboard(){
 
     document.querySelector("#managerDashboard h3").textContent =
     club + " Manager Dashboard";
-
+document.getElementById("managerClub").textContent = club;
     document.getElementById("managerBudget").textContent = budget;
 
     document.getElementById("managerTransfers").textContent = squadCount;
