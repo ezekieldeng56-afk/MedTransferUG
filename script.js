@@ -111,7 +111,7 @@ if(budget >= fee){
 
 budget = budget - fee;
 
-
+updateDashboard();
 let team = document.getElementById("team-list");
 
 let player = document.createElement("li");
