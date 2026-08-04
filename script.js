@@ -144,13 +144,14 @@ team.appendChild(player);
 
 squadCount = squadCount + 1;
 
-document.getElementById("squad-size").textContent = squadCount;let button = document.getElementById(buttonId);
+document.getElementById("managerSquad").textContent = squadCount;
+document.getElementById("managerTransfers").textContent = squadCount;let button = document.getElementById(buttonId);
 
 button.textContent = "✅ Signed";
 
 button.disabled = true;
 
-document.getElementById("budget").textContent = budget;
+document.getElementById("managerBudget").textContent = budget;
 // Move player between squads
 
 let newClub = document.getElementById("clubSelect").value;
