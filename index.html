@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedTransfer UG</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+<h1>⚽ MedTransfer UG</h1>
+
+<p>The Official Medical School Player Transfer Market</p><section class="market">
+   <h2>Transfer Window</h2>
+
+<p id="windowStatus" style="font-weight:bold; color:green;">
+🟢 TRANSFER WINDOW OPEN
+</p>
+
+<p id="countdown" style="font-size:18px; font-weight:bold;">
+⏳ Loading...
+</p>
+
+<button onclick="toggleWindow()">
+Toggle Transfer Window
+</button>
+    <h2>Transfer Market</h2>
+</section>
+       <h2>Manager Login</h2>
+
+<input
+    type="password"
+    id="managerPassword"
+    placeholder="Enter Manager Password">
+
+<button onclick="loginManager()">
+Login
+</button>
+
+<p id="loginStatus">
+❌ Not Logged In
+</p>
+    <h2>Select Your Club</h2>
+
+<select id="clubSelect" onchange="updateDashboard()">
+    <option value="">Select Your Club</option>
+    <option value="BMAM">BMAM</option>
+    <option value="BPHARM">BPHARM</option>
+    <option value="BDS">BDS</option>
+    <option value="BNUR">BNUR</option>
+    <option value="BMR">BMR</option>
+    <option value="BSLT">BSLT</option>
+    <option value="BBSB">BBSB</option>
+    <option value="BCYT">BCYT</option>
+    <option value="BOPT">BOPT</option>
+</select>
+    <div class="players">
+
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="isaac.jpg" alt="Isaac">
+  </div>
+
+  <h3>Isaac Soyekwo</h3>
+
+  <span class="badge">BPHARM</span>
+
+  <p>Year: 3</p>
+
+  <h2 style="color:red;">⭐ 89</h2>
+
+<h2 style="color:blue;">UGX 19,000</h2>
+
+  <button id="isaac-btn"
+  onclick="signPlayer('Isaac Soyekwo',19000,'Forward','isaac-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+'Isaac Soyekwo',
+'BPHARM',
+'Year 3',
+'Forward',
+'89',
+'19000',
+'isaac.jpg'
+)">
+View Profile
+  </button>
+
+</div>
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="phoebe.jpg" alt="Phoebe">
+  </div>
+
+  <h3>Phoebe Treasure</h3>
+
+  <span class="badge">BDS</span>
+
+  <p>Year: 3</p>
+
+  <h2 style="color:red;">⭐ 20</h2>
+
+<h2 style="color:blue;">UGX 4,000</h2>
+
+  <button id="phoebe-btn"
+  onclick="signPlayer('Phoebe Treasure',4000,'Forward','phoebe-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Phoebe Treasure',
+  'BDS',
+  'Year 3',
+  'Forward',
+  '20',
+  '4000',
+'images/phoebe.jpg'
+  )">
+  View Profile
+  </button>
+
+</div>
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="deng.jpg" alt="Deng Ezekiel">
+  </div>
+
+  <h3>Deng Ezekiel</h3>
+
+  <span class="badge">BNUR</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 95
+  </div>
+
+  <h2 style="color:blue;">UGX 20,000</h2>
+
+  <button id="deng-btn"
+  onclick="signPlayer('Deng Ezekiel',20000,'Forward','deng-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Deng Ezekiel',
+  'BNUR',
+  'Year 3',
+  'Forward',
+  '95',
+  '20000',
+'deng.jpg'
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="agaba.jpg" alt="Agaba Vincent">
+  </div>
+
+  <h3>Agaba Vincent</h3>
+
+  <span class="badge">BNUR</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 97
+  </div>
+
+  <h2 style="color:blue;">UGX 22,000</h2>
+
+  <button id="agaba-btn"
+  onclick="signPlayer('Agaba Vincent',22000,'Forward','agaba-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Agaba Vincent',
+  'BNUR',
+  'Year 3',
+  'Forward',
+  '97',
+  '22000',
+'agaba.jpg'
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="lucky.jpg" alt="Lucky Godwin">
+  </div>
+
+  <h3>Lucky Godwin</h3>
+
+  <span class="badge">BSLT</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 90
+  </div>
+
+  <h2 style="color:blue;">UGX 20,000</h2>
+
+  <button id="lucky-btn"
+  onclick="signPlayer('Lucky Godwin',20000,'Midfield','lucky-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Lucky Godwin',
+  'BSLT',
+  'Year 3',
+  'Midfield',
+  '90',
+  '20000',
+'lucky.jpg'
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="abhinava.jpg" alt="Abhinava Raval">
+  </div>
+
+  <h3>Abhinava Raval</h3>
+
+  <span class="badge">BMAM</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 75
+  </div>
+
+  <h2 style="color:blue;">UGX 19,000</h2>
+
+  <button id="abhinava-btn"
+  onclick="signPlayer('Abhinava Raval',19000,'Keeper','abhinava-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Abhinava Raval',
+  'BMAM',
+  'Year 3',
+  'Keeper',
+  '75',
+  '19000',
+'abhinava.jpg'
+  )">
+  View Profile
+  </button>
+
+</div>
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="chris.jpg" alt="Eluru Chris">
+  </div>
+
+  <h3>Eluru Chris</h3>
+
+  <span class="badge">BOPT</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 85
+  </div>
+
+  <h2 style="color:blue;">UGX 15,000</h2>
+
+  <button id="chris-btn"
+  onclick="signPlayer('Eluru Chris',15000,'Forward','chris-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Eluru Chris',
+  'BOPT',
+  'Year 3',
+  'Forward',
+  '85',
+  '15000',
+ 'chris.jpg'
+) 
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="odeke.jpg" alt="Odeke Andrew">
+  </div>
+
+  <h3>Odeke Andrew</h3>
+
+  <span class="badge">BMR</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 80
+  </div>
+
+<h2 style="color:blue;">UGX 19,000</h2>
+
+  <button id="odeke-btn"
+  onclick="signPlayer('Odeke Andrew',19000,'Midfield','odeke-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Odeke Andrew',
+  'BMR',
+  'Year 3',
+  'Midfield',
+  '80',
+  '19000',
+  'odeke.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="collins.jpg" alt="Collins Abaasa">
+  </div>
+
+  <h3>Collins Abaasa</h3>
+
+  <span class="badge">BMAM</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 75
+  </div>
+
+  <h2 style="color:blue;">UGX 17,500</h2>
+
+  <button id="collins-btn"
+  onclick="signPlayer('Collins Abaasa',17500,'Midfield','collins-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Collins Abaasa',
+  'BMAM',
+  'Year 3',
+  'Midfield',
+  '75',
+  '17500',
+'collins.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="cassey.jpg" alt="Cassey Breezy">
+  </div>
+
+  <h3>Cassey Breezy</h3>
+
+  <span class="badge">BMAM</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 82
+  </div>
+
+  <h2 style="color:blue;">UGX 18,000</h2>
+
+  <button id="cassey-btn"
+  onclick="signPlayer('Cassey Breezy',18000,'Forward','cassey-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Cassey Breezy',
+  'BMAM',
+  'Year 3',
+  'Forward',
+  '82',
+  '18000',
+'cassey.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="gilbert.jpg" alt="Gilbert Ayesigamukama">
+  </div>
+
+  <h3>Gilbert Ayesigamukama</h3>
+
+  <span class="badge">BMAM</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 79
+  </div>
+
+  <h2 style="color:blue;">UGX 16,500</h2>
+
+  <button id="gilbert-btn"
+  onclick="signPlayer('Gilbert Ayesigamukama',16500,'Defense','gilbert-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Gilbert Ayesigamukama',
+  'BMAM',
+  'Year 3',
+  'Defense',
+  '79',
+  '16500',
+'gilbert.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="ebenezer.jpg" alt="Ebenezer Wamezaya">
+  </div>
+
+  <h3>Ebenezer Wamezaya</h3>
+
+  <span class="badge">BPHARM</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 71
+  </div>
+
+  <h2 style="color:blue;">UGX 13,000</h2>
+
+  <button id="ebenezer-btn"
+  onclick="signPlayer('Ebenezer Wamezaya',13000,'Forward','ebenezer-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Ebenezer Wamezaya',
+  'BPHARM',
+  'Year 3',
+  'Forward',
+  '71',
+  '13000',
+  'ebenezer.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="shon.jpg" alt="Shon Uncle">
+  </div>
+
+  <h3>Shon Uncle</h3>
+
+  <span class="badge">BMAM</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 73
+  </div>
+
+  <h2 style="color:blue;">UGX 19,000</h2>
+
+  <button id="shon-btn"
+  onclick="signPlayer('Shon Uncle',19000,'Keeper','shon-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Shon Uncle',
+  'BMAM',
+  'Year 3',
+  'Keeper',
+  '73',
+  '19000',
+'shon.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="joel.jpg" alt="Joel Nuwamanya">
+  </div>
+
+  <h3>Joel Nuwamanya</h3>
+
+  <span class="badge">BPHARM</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 70
+  </div>
+
+  <h2 style="color:blue;">UGX 14,000</h2>
+
+  <button id="joel-btn"
+  onclick="signPlayer('Joel Nuwamanya',14000,'Defense','joel-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Joel Nuwamanya',
+  'BPHARM',
+  'Year 3',
+  'Defense',
+  '70',
+  '14000',
+'joel.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="derrick.jpg" alt="Kasalirwe Derrick">
+  </div>
+
+  <h3>Kasalirwe Derrick</h3>
+
+  <span class="badge">BCYT</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 74
+  </div>
+
+  <h2 style="color:blue;">UGX 12,000</h2>
+
+  <button id="derrick-btn"
+  onclick="signPlayer('Kasalirwe Derrick',12000,'Midfield','derrick-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Kasalirwe Derrick',
+  'BCYT',
+  'Year 3',
+  'Midfield',
+  '74',
+  '12000',
+'derrick.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="wejuli.jpg" alt="Wejuli Jeremiah">
+  </div>
+
+  <h3>Wejuli Jeremiah</h3>
+
+  <span class="badge">BBSB</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 80
+  </div>
+
+    <h2 style="color:blue;">UGX 18,500</h2>
+    
+
+  <button id="wejuli-btn"
+  onclick="signPlayer('Wejuli Jeremiah',18500,'Midfield','wejuli-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Wejuli Jeremiah',
+  'BBSB',
+  'Year 3',
+  'Midfield',
+  '80',
+  '18500',
+'wejuli.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="allan.jpg" alt="Allan Odoch">
+  </div>
+
+  <h3>Allan Odoch</h3>
+
+  <span class="badge">BBSB</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 89
+  </div>
+
+  <h2 style="color:blue;">UGX 20,000</h2>
+
+  <button id="allan-btn"
+  onclick="signPlayer('Allan Odoch',20000,'Keeper','allan-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Allan Odoch',
+  'BBSB',
+  'Year 3',
+  'Keeper',
+  '89',
+  '20000',
+'allan.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="alex.jpg" alt="Onzima Alex">
+  </div>
+
+  <h3>Onzima Alex</h3>
+
+  <span class="badge">BCYT</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 65
+  </div>
+
+  <h2 style="color:blue;">UGX 11,000</h2>
+
+  <button id="onzima-btn"
+  onclick="signPlayer('Onzima Alex',11000,'Forward','onzima-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Onzima Alex',
+  'BCYT',
+  'Year 3',
+  'Forward',
+  '65',
+  '11000',
+  'alex.jpg'
+  )">
+  View Profile
+  </button>
+
+</div>
+
+
+<div class="player-card">
+
+  <div class="player-image">
+      <img src="asiimwe.jpg" alt="Asiimwe Henry">
+  </div>
+
+  <h3>Asiimwe Henry</h3>
+
+  <span class="badge">BPHARM</span>
+
+  <p>Year: 3</p>
+
+  <div class="rating">
+      ⭐ 69
+  </div>
+
+  <h2 style="color:blue;">UGX 12,000</h2>
+
+  <button id="asiimwe-btn"
+  onclick="signPlayer('Asiimwe Henry',12000,'Defense','asiimwe-btn')">
+  Sign Player
+  </button>
+
+  <button onclick="viewProfile(
+  'Asiimwe Henry',
+  'BPHARM',
+  'Year 3',
+  'Defense',
+  '69',
+  '12000',
+'asiimwe.jpg'
+)
+  )">
+  View Profile
+  </button>
+
+</div>
+        <hr>
+
+<h2>Course Squads</h2>
+
+<select id="squadSelect" onchange="showSquad()">
+    <option value="">Select a Course</option>
+    <option value="BPHARM">BPHARM</option>
+    <option value="BDS">BDS</option>
+    <option value="BNUR">BNUR</option>
+    <option value="BMR">BMR</option>
+    <option value="BSLT">BSLT</option>
+    <option value="BMAM">BMAM</option>
+    <option value="BBSB">BBSB</option>
+    <option value="BCYT">BCYT</option>
+    <option value="BOPT">BOPT</option>
+</select>
+        <div id="squadList"></div>
+<hr>
+
+<h2>Latest Transfers</h2>
+<hr>
+
+<h2>Transfer News</h2>
+<hr>
+
+<h2>Manager Dashboard</h2>
+
+<div id="managerDashboard" class="dashboard">
+
+    <h3>No Club Selected</h3>
+<p><strong>Club:</strong> <span id="managerClub">-</span></p>
+    
+
+    <p><strong>Budget:</strong> UGX <span id="managerBudget">100000</span></p>
+
+    <p><strong>Players Signed:</strong> <span id="managerTransfers">0</span></p>
+
+    <p><strong>Squad Size:</strong> <span id="managerSquad">0</span></p>
+
+    <p><strong>Transfer Window:</strong> <span id="managerWindow">🟢 OPEN</span></p>
+
+</div>
+<div id="transferNews">
+    <p>No transfer news yet.</p>
+</div>
+<ul id="transferHistory">
+    <li>No transfers yet.</li>
+</ul>
+
+</section>
+
+</header><nav>
+
+<a href="index.html">Home</a>
+<a href="market.html">Transfer Market</a>
+<a href="leaderboard.html">Leaderboard</a>
+<a href="about.html">About</a>
+
+</nav>
+
+
+
+<section class="dashboard">
+<section class="club-select">
+
+
+<h2>Transfer Market</h2>
+<section class="my-team">
+
+<h2>My Team</h2>
+
+<ul id="team-list">
+
+</ul>
+
+
+</section>
+<div id="profileModal" class="modal">
+
+<div class="modal-content">
+
+<img id="playerPhoto"
+src=""
+alt="Player Photo">
+
+<h2 id="playerName"></h2>
+
+<p><strong>Course:</strong> <span id="playerCourse"></span></p>
+
+<p><strong>Year:</strong> <span id="playerYear"></span></p>
+
+<p><strong>Position:</strong> <span id="playerPosition"></span></p>
+
+<p><strong>Rating:</strong> ⭐ <span id="playerRating"></span></p>
+
+<p><strong>Transfer Fee:</strong> UGX <span id="playerFee"></span></p>
+
+<button onclick="closeProfile()">Close</button>
+
+</div>
+
+</div>
+<script src="script.js"></script>
+<footer>
+
+<p>Developed by Deng Majok Deng</p>
+
+<p>© 2026 MedTransfer UG. All Rights Reserved.</p>
+
+</footer>
+</body>
+</html>
