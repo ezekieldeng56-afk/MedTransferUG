@@ -233,44 +233,30 @@ margin-top:40px;
     color: black;
 }
 
-#squadList {
-    color: black;
-    background: white;
+#squadList{
+    max-width:340px;
+    margin:15px auto;
 }
 
+.squad-box{
+    padding:12px;
+    border-radius:12px;
+}
+
+.squad-box h3{
+    font-size:18px;
+}
+
+.squad-box p,
+.squad-player{
+    font-size:14px;
+}
 .squad-player {
     color: black;
     background: white;
     border: 1px solid #ccc;
 }
-#squadList * {
-    color: black !important;
-}
-#transferHistory {
-    background: white;
-    color: black;
-    padding: 15px;
-    border-radius: 10px;
-    list-style: none;
-}
 
-#transferHistory li {
-    padding: 8px;
-    margin: 6px 0;
-    border-bottom: 1px solid #ddd;
-}
-.dashboard{
-    background:white;
-    color:black;
-    padding:20px;
-    border-radius:12px;
-    margin-top:20px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.2);
-}
-
-.dashboard h3{
-    color:#0066cc;
-}
 .players{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
@@ -331,13 +317,18 @@ margin-top:40px;
 }    
  /* Compact Transfer News */
 #transferHistory{
-    padding:10px;
-    font-size:14px;
+    background:#fff;
+    max-width:340px;
+    margin:15px auto;
+    padding:12px;
+    border-radius:12px;
+    list-style:none;
 }
 
 #transferHistory li{
-    padding:5px;
-    margin:3px 0;
+    font-size:14px;
+    padding:6px 0;
+    border-bottom:1px solid #ddd;
 }
 
 
@@ -379,38 +370,35 @@ margin-top:40px;
     margin-top:20px;
 }
 .dashboard{
-    background:white;
-    color:black;
-    padding:15px;
+    background:#fff;
+    color:#000;
+    max-width:340px;
     margin:15px auto;
-    border-radius:15px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.2);
-    max-width:320px;
-    text-align:center;
+    padding:12px;
+    border-radius:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.15);
 }
 
 .dashboard h3{
-    font-size:22px;
-    margin-bottom:10px;
+    font-size:20px;
+    margin-bottom:8px;
     color:#0066cc;
 }
 
 .dashboard p{
-    font-size:16px;
-    margin:8px 0;
+    font-size:14px;
+    margin:6px 0;
+}
+#transferNews{
+    background:#fff;
+    padding:12px;
+    margin:15px auto;
+    border-radius:12px;
+    max-width:340px;
+    font-size:14px;
     line-height:1.4;
-}#transferNews{
-    background:white;
-    color:black;
-    padding:15px;
-    border-radius:15px;
-    margin-top:15px;
-    font-size:15px;
-    line-height:1.5;
 }
 
 #transferNews p{
-    margin-bottom:10px;
-    border-bottom:1px solid #ddd;
-    padding-bottom:8px;
+    margin:6px 0;
 }
