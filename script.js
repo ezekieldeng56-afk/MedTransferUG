@@ -123,7 +123,7 @@ const playerTeams = {
     "Eluru Chris": "BOPT",
 
     "Onzima Alex": "BCYT",
-    "Kasalirwe Derrick": "BCYT"
+    "Kasalirwe Derrick": "BCYT",
     "Asiimwe Henry": "BPHARM",
 "Allan Odoch": "BBSB",
 "Wejuli Jeremiah": "BBSB",
