@@ -15,21 +15,32 @@
 <h1>⚽ MedTransfer UG</h1>
 
 <p>The Official Medical School Player Transfer Market</p><section class="market">
-   <h2>Transfer Window</h2>
-
-<p id="windowStatus" style="font-weight:bold; color:green;">
+  <p id="windowStatus">
 🟢 TRANSFER WINDOW OPEN
 </p>
 
-<p id="countdown" style="font-size:18px; font-weight:bold;">
+<p id="countdown">
 ⏳ Loading...
 </p>
 
 <button onclick="toggleWindow()">
 Toggle Transfer Window
-</button>
-    <h2>Transfer Market</h2>
+</button> 
 </section>
+        <h2>Select Your Club</h2>
+
+<select id="clubSelect" onchange="updateDashboard()">
+    <option value="">Select Your Club</option>
+    <option value="BMAM">BMAM</option>
+    <option value="BPHARM">BPHARM</option>
+    <option value="BDS">BDS</option>
+    <option value="BNUR">BNUR</option>
+    <option value="BMR">BMR</option>
+    <option value="BSLT">BSLT</option>
+    <option value="BBSB">BBSB</option>
+    <option value="BCYT">BCYT</option>
+    <option value="BOPT">BOPT</option>
+</select>
        <h2>Manager Login</h2>
 
 <input
@@ -44,20 +55,7 @@ Login
 <p id="loginStatus">
 ❌ Not Logged In
 </p>
-    <h2>Select Your Club</h2>
 
-<select id="clubSelect" onchange="updateDashboard()">
-    <option value="">Select Your Club</option>
-    <option value="BMAM">BMAM</option>
-    <option value="BPHARM">BPHARM</option>
-    <option value="BDS">BDS</option>
-    <option value="BNUR">BNUR</option>
-    <option value="BMR">BMR</option>
-    <option value="BSLT">BSLT</option>
-    <option value="BBSB">BBSB</option>
-    <option value="BCYT">BCYT</option>
-    <option value="BOPT">BOPT</option>
-</select>
     <div class="players">
 
 
