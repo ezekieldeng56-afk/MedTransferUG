@@ -75,13 +75,12 @@ button:hover{
 
 .player-card button{
     width:100%;
-}.market{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:20px;
-    padding:30px;
-}.controls{
+.market{
+    display:block;
+    width:100%;
+    padding:20px;
+}
+ .controls{
     display:flex;
     justify-content:center;
     gap:15px;
@@ -386,3 +385,27 @@ margin-top:40px;
 #transferNews p{
     margin:6px 0;
 }
+#transferNews{
+    color:black;
+}
+
+#transferNews p,
+#transferNews strong{
+    color:black;
+    }
+    #transferHistory{
+    color:black;
+    background:white;
+}
+
+#transferHistory li{
+    color:black;
+}
+    #managerDashboard,
+#transferNews,
+#transferHistory,
+#squadList{
+    display:block;
+    width:95%;
+    margin:20px auto;
+    }
