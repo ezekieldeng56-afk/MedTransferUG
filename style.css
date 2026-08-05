@@ -122,20 +122,6 @@ button:hover{
     overflow: hidden;
 }
 
-.player-image {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 10px;
-    overflow: hidden;
-}
-
-.player-image img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block;
-}
 
 .badge {
     background: green;
@@ -232,12 +218,6 @@ margin-top:40px;
     color: black;
 }
 
-.players{
-    display:grid;
-    grid-template-columns:repeat(2, 1fr);
-    gap:12px;
-    padding:15px;
-}
 
 .player-card{
     background:white;
@@ -282,7 +262,12 @@ margin-top:40px;
     font-size:12px;
     margin-top:5px;
 }
-
+.players{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+    padding:15px;
+}
 @media(min-width:768px){
 
 .players{
