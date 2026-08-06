@@ -1,5 +1,6 @@
 let squadCount = 0;
 let budget = 40000;
+let signedButtons = [];
 let transferWindowOpen = true;
 // Transfer window closes 14 days from opening
 const deadline = new Date();
@@ -169,6 +170,12 @@ document.getElementById("managerTransfers").textContent = squadCount;let button 
 button.textContent = "✅ Signed";
 
 button.disabled = true;
+    signedButtons.push(buttonId);
+
+localStorage.setItem(
+"signedButtons",
+JSON.stringify(signedButtons)
+);
 
 document.getElementById("managerBudget").textContent = budget;
 // Move player between squads
@@ -248,7 +255,28 @@ document.getElementById("transferNews").innerHTML =
 localStorage.getItem("transferNews");
 
 updateDashboard();
+let savedButtons =
+JSON.parse(localStorage.getItem("signedButtons"));
 
+if(savedButtons){
+
+signedButtons = savedButtons;
+
+signedButtons.forEach(function(id){
+
+let btn = document.getElementById(id);
+
+if(btn){
+
+btn.disabled = true;
+
+btn.textContent = "✅ Signed";
+
+}
+
+});
+
+}
 }
 
       }
