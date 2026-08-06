@@ -467,6 +467,28 @@ localStorage.setItem("loggedInClub", club);
     }
 
 }
+function loginAdmin(){
+
+    let password = document.getElementById("adminPassword").value;
+
+    if(password === adminPassword){
+
+        adminLoggedIn = true;
+
+        document.getElementById("adminStatus").innerHTML =
+        "👑 Admin Logged In";
+
+        document.getElementById("adminResetBtn").style.display = "inline-block";
+
+        alert("Welcome Admin!");
+
+    }else{
+
+        alert("Incorrect Admin Password.");
+
+    }
+
+}
 function saveData(){
 
 localStorage.setItem("budget", budget);
@@ -485,3 +507,19 @@ document.getElementById("transferNews").innerHTML);
 
 }
 loadData();
+function resetMarket(){
+
+let password = prompt("Enter Admin Password");
+
+if(password !== "MedTransfer2026"){
+    alert("Wrong Admin Password!");
+    return;
+}
+
+localStorage.clear();
+
+alert("✅ Transfer Market Reset Successfully!");
+
+location.reload();
+
+}
