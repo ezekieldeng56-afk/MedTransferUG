@@ -201,22 +201,9 @@ squads[newClub].push(playerName);
 
 playerTeams[playerName] = newClub;
         showSquad();
-let history = document.getElementById("transferHistory");
-
-if (history.firstElementChild &&
-    history.firstElementChild.textContent === "No transfers yet.") {
-    history.innerHTML = "";
-}
-
-let transfer = document.createElement("li");
-
-transfer.textContent =
-playerName + " : " + oldClub + " ➜ " + newClub;
-
-history.prepend(transfer);
   let news = document.getElementById("transferNews");
 
-if (news.innerText === "No transfer news yet.") {
+if(news.innerHTML.includes("No transfer news yet")){
     news.innerHTML = "";
 }
 
