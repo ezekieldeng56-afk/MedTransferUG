@@ -7,6 +7,9 @@ const deadline = new Date();
 
 // Add 14 days
 deadline.setDate(deadline.getDate() + 14);
+let adminLoggedIn = false;
+
+const adminPassword = "MedTransfer2027";
 let loggedIn = false;
 let loggedInClub = "";
 const managerPasswords = {
