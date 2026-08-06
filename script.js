@@ -229,7 +229,29 @@ saveData();
 }
 
 }
+function loadData(){
 
+if(localStorage.getItem("budget")){
+
+budget = Number(localStorage.getItem("budget"));
+
+squadCount = Number(localStorage.getItem("squadCount"));
+
+playerTeams = JSON.parse(localStorage.getItem("playerTeams"));
+
+squads = JSON.parse(localStorage.getItem("squads"));
+
+document.getElementById("team-list").innerHTML =
+localStorage.getItem("teamList");
+
+document.getElementById("transferNews").innerHTML =
+localStorage.getItem("transferNews");
+
+updateDashboard();
+
+}
+
+      }
 else{
 
 alert("Not enough budget");
@@ -431,3 +453,4 @@ localStorage.setItem("transferNews",
 document.getElementById("transferNews").innerHTML);
 
 }
+loadData();
