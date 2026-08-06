@@ -172,10 +172,12 @@ button:hover{
     background:white;
     color:black;
     width:95%;
-    max-width:500px;
+    max-width:600px;
     margin:20px auto;
-    padding:15px;
+    padding:20px;
     border-radius:12px;
+    display:block;
+    clear:both;
 }
 
 /* COURSE SQUADS */
@@ -204,8 +206,12 @@ button:hover{
     width:95%;
     max-width:600px;
     margin:20px auto;
-    padding:15px;
+    padding:20px;
     border-radius:12px;
+    display:block;
+    clear:both;
+    list-style:disc;
+    padding-left:35px;
 }
 
 #transferHistory li{
@@ -292,15 +298,28 @@ footer p{
     padding:8px 0;
     border-bottom:1px solid #ddd;
 }
-
 #transferNews{
     background:white;
     color:black;
-    padding:15px;
+    width:95%;
+    max-width:600px;
+    margin:20px auto;
+    padding:20px;
     border-radius:12px;
+    display:block;
+    clear:both;
 }
 
 .squad-box,
 .dashboard{
     width:100%;
+}
+#managerDashboard,
+#transferNews,
+#transferHistory,
+#squadList{
+    display:block;
+    width:95%;
+    max-width:600px;
+    margin:20px auto;
 }
