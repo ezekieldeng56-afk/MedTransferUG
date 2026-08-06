@@ -51,7 +51,29 @@ Toggle Transfer Window
 <button onclick="loginManager()">
 Login
 </button>
+<hr>
 
+<h2>Admin Login</h2>
+
+<input
+type="password"
+id="adminPassword"
+placeholder="Enter Admin Password">
+
+<button onclick="loginAdmin()">
+Admin Login
+</button>
+
+<p id="adminStatus">
+🔒 Admin Offline
+</p>
+
+<button
+id="adminResetBtn"
+onclick="resetMarket()"
+style="display:none;">
+🔄 Reset Transfer Market
+</button>
 <p id="loginStatus">
 ❌ Not Logged In
 </p>
