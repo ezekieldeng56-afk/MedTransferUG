@@ -1,5 +1,5 @@
 let squadCount = 0;
-let budget = 100000;
+let budget = 40000;
 let transferWindowOpen = true;
 // Transfer window closes 14 days from opening
 const deadline = new Date();
@@ -142,7 +142,10 @@ if(loggedInClub !== document.getElementById("clubSelect").value){
     alert("You can only manage your own club.");
     return;
 }
-
+if (squadCount >= 2) {
+    alert("Maximum of 2 signings allowed per manager.");
+    return;
+}
 
 
 if(budget >= fee){
