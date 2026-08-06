@@ -414,3 +414,20 @@ localStorage.setItem("loggedInClub", club);
     }
 
 }
+function saveData(){
+
+localStorage.setItem("budget", budget);
+
+localStorage.setItem("squadCount", squadCount);
+
+localStorage.setItem("playerTeams", JSON.stringify(playerTeams));
+
+localStorage.setItem("squads", JSON.stringify(squads));
+
+localStorage.setItem("teamList",
+document.getElementById("team-list").innerHTML);
+
+localStorage.setItem("transferNews",
+document.getElementById("transferNews").innerHTML);
+
+}
