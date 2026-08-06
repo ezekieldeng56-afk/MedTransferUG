@@ -225,7 +225,7 @@ fee.toLocaleString() +
 
 news.prepend(headline);
 alert(playerName + " transferred to " + newClub);
-
+saveData();
 }
 
 }
