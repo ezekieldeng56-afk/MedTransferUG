@@ -55,7 +55,38 @@ Login
 <p id="loginStatus">
 ❌ Not Logged In
 </p>
+<h2>Manager Dashboard</h2>
 
+<div id="managerDashboard" class="dashboard">
+
+    <h3>No Club Selected</h3>
+<p><strong>Club:</strong> <span id="managerClub">-</span></p>
+    
+
+    <p><strong>Budget:</strong> UGX <span id="managerBudget">40000</span></p>
+
+    <p><strong>Players Signed:</strong> <span id="managerTransfers">0</span></p>
+
+    <p><strong>Squad Size:</strong> <span id="managerSquad">0</span></p>
+
+    <p><strong>Transfer Window:</strong> <span id="managerWindow">🟢 OPEN</span></p>
+
+</div>
+ <h2>Course Squads</h2>
+
+<select id="squadSelect" onchange="showSquad()">
+    <option value="">Select a Course</option>
+    <option value="BPHARM">BPHARM</option>
+    <option value="BDS">BDS</option>
+    <option value="BNUR">BNUR</option>
+    <option value="BMR">BMR</option>
+    <option value="BSLT">BSLT</option>
+    <option value="BMAM">BMAM</option>
+    <option value="BBSB">BBSB</option>
+    <option value="BCYT">BCYT</option>
+    <option value="BOPT">BOPT</option>
+</select>
+        <div id="squadList"></div>
     <div class="players">
 
 
@@ -753,44 +784,14 @@ View Profile
 </div>
         <hr>
 
-<h2>Course Squads</h2>
 
-<select id="squadSelect" onchange="showSquad()">
-    <option value="">Select a Course</option>
-    <option value="BPHARM">BPHARM</option>
-    <option value="BDS">BDS</option>
-    <option value="BNUR">BNUR</option>
-    <option value="BMR">BMR</option>
-    <option value="BSLT">BSLT</option>
-    <option value="BMAM">BMAM</option>
-    <option value="BBSB">BBSB</option>
-    <option value="BCYT">BCYT</option>
-    <option value="BOPT">BOPT</option>
-</select>
-        <div id="squadList"></div>
 <hr>
 
 
 <h2>Transfer News</h2>
 <hr>
 
-<h2>Manager Dashboard</h2>
 
-<div id="managerDashboard" class="dashboard">
-
-    <h3>No Club Selected</h3>
-<p><strong>Club:</strong> <span id="managerClub">-</span></p>
-    
-
-    <p><strong>Budget:</strong> UGX <span id="managerBudget">40000</span></p>
-
-    <p><strong>Players Signed:</strong> <span id="managerTransfers">0</span></p>
-
-    <p><strong>Squad Size:</strong> <span id="managerSquad">0</span></p>
-
-    <p><strong>Transfer Window:</strong> <span id="managerWindow">🟢 OPEN</span></p>
-
-</div>
 <div id="transferNews">
     <p>No transfer news yet.</p>
 </div>
