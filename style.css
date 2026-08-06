@@ -267,3 +267,40 @@ footer p{
 }
 
 }
+/* ===== Homepage Sections ===== */
+
+#squadList,
+#managerDashboard,
+#transferNews,
+#transferHistory{
+    display:block;
+    width:95%;
+    max-width:650px;
+    margin:20px auto;
+    clear:both;
+}
+
+#transferHistory{
+    list-style:none;
+    padding:15px;
+    background:white;
+    color:black;
+    border-radius:12px;
+}
+
+#transferHistory li{
+    padding:8px 0;
+    border-bottom:1px solid #ddd;
+}
+
+#transferNews{
+    background:white;
+    color:black;
+    padding:15px;
+    border-radius:12px;
+}
+
+.squad-box,
+.dashboard{
+    width:100%;
+}
