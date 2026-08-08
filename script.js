@@ -234,6 +234,7 @@ fee.toLocaleString() +
 "</strong>.";
 
 news.prepend(headline);
+        saveData();
 alert(playerName + " transferred to " + newClub);
 saveData();
 }
@@ -491,19 +492,75 @@ function loginAdmin(){
 }
 function saveData(){
 
-localStorage.setItem("budget", budget);
+    localStorage.setItem("budget", budget);
 
-localStorage.setItem("squadCount", squadCount);
+    localStorage.setItem("squadCount", squadCount);
 
-localStorage.setItem("playerTeams", JSON.stringify(playerTeams));
+    localStorage.setItem(
+        "playerTeams",
+        JSON.stringify(playerTeams)
+    );
 
-localStorage.setItem("squads", JSON.stringify(squads));
+    localStorage.setItem(
+        "squads",
+        JSON.stringify(squads)
+    );
 
-localStorage.setItem("teamList",
-document.getElementById("team-list").innerHTML);
+    localStorage.setItem(
+        "teamList",
+        document.getElementById("team-list").innerHTML
+    );
 
-localStorage.setItem("transferNews",
-document.getElementById("transferNews").innerHTML);
+    localStorage.setItem(
+        "transferNews",
+        document.getElementById("transferNews").innerHTML
+    );
+
+}
+function loadData(){
+
+    let savedBudget = localStorage.getItem("budget");
+    let savedSquadCount = localStorage.getItem("squadCount");
+    let savedPlayerTeams = localStorage.getItem("playerTeams");
+    let savedSquads = localStorage.getItem("squads");
+    let savedTeamList = localStorage.getItem("teamList");
+    let savedTransferNews = localStorage.getItem("transferNews");
+
+    if(savedBudget !== null){
+        budget = Number(savedBudget);
+    }
+
+    if(savedSquadCount !== null){
+        squadCount = Number(savedSquadCount);
+    }
+
+    if(savedPlayerTeams !== null){
+        playerTeams = JSON.parse(savedPlayerTeams);
+    }
+
+    if(savedSquads !== null){
+        squads = JSON.parse(savedSquads);
+    }
+
+    if(savedTeamList !== null){
+        document.getElementById("team-list").innerHTML = savedTeamList;
+    }
+
+    if(savedTransferNews !== null){
+        document.getElementById("transferNews").innerHTML = savedTransferNews;
+    }
+
+    if(document.getElementById("managerBudget")){
+        document.getElementById("managerBudget").textContent = budget;
+    }
+
+    if(document.getElementById("managerSquad")){
+        document.getElementById("managerSquad").textContent = squadCount;
+    }
+
+    if(document.getElementById("managerTransfers")){
+        document.getElementById("managerTransfers").textContent = squadCount;
+    }
 
 }
 loadData();
