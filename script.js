@@ -1,30 +1,19 @@
-/* =====================================================
-   MEDTRANSFER UG
-   MAIN JAVASCRIPT
-===================================================== */
+let squadCount = 0;
+let budget = 40000;
+let signedButtons = [];
+let signedPlayers = [];
+let transferWindowOpen = true;
 
+const deadline = new Date();
+deadline.setDate(deadline.getDate() + 14);
 
-/* ==========================
-   BASIC SETTINGS
-========================== */
-
-const STARTING_BUDGET = 40000;
-const MAX_SIGNINGS = 2;
-
+let adminLoggedIn = false;
 const adminPassword = "MedTransfer2027";
 
-let transferWindowOpen = true;
 let loggedIn = false;
 let loggedInClub = "";
-let adminLoggedIn = false;
-
-
-/* ==========================
-   MANAGER PASSWORDS
-========================== */
 
 const managerPasswords = {
-
     BPHARM: "BPHARM@2026",
     BDS: "BDS@2026",
     BNUR: "BNUR@2026",
@@ -34,15 +23,14 @@ const managerPasswords = {
     BBSB: "BBSB@2026",
     BCYT: "BCYT@2026",
     BOPT: "BOPT@2026"
-
 };
 
 
-/* ==========================
-   ORIGINAL COURSE SQUADS
-========================== */
+/* =========================
+   COURSE SQUADS
+========================= */
 
-const originalSquads = {
+let squads = {
 
     BPHARM: [
         "Isaac Soyekwo",
@@ -122,15 +110,14 @@ const originalSquads = {
         "Eluru Chris",
         "Ndagije Christine"
     ]
-
 };
 
 
-/* ==========================
+/* =========================
    ORIGINAL PLAYER CLUBS
-========================== */
+========================= */
 
-const originalPlayerTeams = {
+let playerTeams = {
 
     "Isaac Soyekwo": "BPHARM",
     "Ebenezer Wamezaya": "BPHARM",
@@ -161,332 +148,306 @@ const originalPlayerTeams = {
 
     "Allan Odoch": "BBSB",
     "Wejuli Jeremiah": "BBSB"
-
 };
 
 
-/* ==========================
-   ACTIVE DATA
-========================== */
+/* =========================
+   SIGN PLAYER
+========================= */
 
-let squads = JSON.parse(JSON.stringify(originalSquads));
+function signPlayer(playerName, fee, position, buttonId) {
 
-let playerTeams = JSON.parse(
-    JSON.stringify(originalPlayerTeams)
-);
+    if (!transferWindowOpen) {
+        alert("The transfer window is CLOSED.");
+        return;
+    }
 
+    if (!loggedIn) {
+        alert("Please log in as a manager first.");
+        return;
+    }
 
-/* Budget for each manager */
+    let newClub = document.getElementById("clubSelect").value;
 
-let clubBudgets = {
+    if (newClub === "") {
+        alert("Please select your club first.");
+        return;
+    }
 
-    BPHARM: STARTING_BUDGET,
-    BDS: STARTING_BUDGET,
-    BNUR: STARTING_BUDGET,
-    BMR: STARTING_BUDGET,
-    BSLT: STARTING_BUDGET,
-    BMAM: STARTING_BUDGET,
-    BBSB: STARTING_BUDGET,
-    BCYT: STARTING_BUDGET,
-    BOPT: STARTING_BUDGET
+    if (loggedInClub !== newClub) {
+        alert("You can only manage your own club.");
+        return;
+    }
 
-};
+    /* Maximum 2 players */
+    if (squadCount >= 2) {
+        alert("Maximum of 2 signings allowed per manager.");
+        return;
+    }
 
-
-/* Number of players signed by each manager */
-
-let clubSignings = {
-
-    BPHARM: 0,
-    BDS: 0,
-    BNUR: 0,
-    BMR: 0,
-    BSLT: 0,
-    BMAM: 0,
-    BBSB: 0,
-    BCYT: 0,
-    BOPT: 0
-
-};
-
-
-/* Players that have already been transferred */
-
-let signedPlayers = {};
-
-
-/* Transfer news */
-
-let transferNewsData = [];
-
-
-/* Transfer deadline */
-
-let deadline;
-
-
-/* ==========================
-   SAVE DATA
-========================== */
-
-function saveData(){
-
-    localStorage.setItem(
-        "clubBudgets",
-        JSON.stringify(clubBudgets)
-    );
-
-    localStorage.setItem(
-        "clubSignings",
-        JSON.stringify(clubSignings)
-    );
-
-    localStorage.setItem(
-        "squads",
-        JSON.stringify(squads)
-    );
-
-    localStorage.setItem(
-        "playerTeams",
-        JSON.stringify(playerTeams)
-    );
-
-    localStorage.setItem(
-        "signedPlayers",
-        JSON.stringify(signedPlayers)
-    );
-
-    localStorage.setItem(
-        "transferNewsData",
-        JSON.stringify(transferNewsData)
-    );
-
-    localStorage.setItem(
-        "transferWindowOpen",
-        transferWindowOpen
-    );
-
-    if(deadline){
-
-        localStorage.setItem(
-            "transferDeadline",
-            deadline.getTime()
+    /* Prevent same player being signed twice */
+    if (signedPlayers.includes(playerName)) {
+        alert(
+            "❌ Transfer Rejected!\n\n" +
+            playerName +
+            " has already been signed."
         );
-
+        return;
     }
 
-}
-
-
-/* ==========================
-   LOAD DATA
-========================== */
-
-function loadData(){
-
-    let savedBudgets =
-        localStorage.getItem("clubBudgets");
-
-    let savedSignings =
-        localStorage.getItem("clubSignings");
-
-    let savedSquads =
-        localStorage.getItem("squads");
-
-    let savedPlayerTeams =
-        localStorage.getItem("playerTeams");
-
-    let savedSignedPlayers =
-        localStorage.getItem("signedPlayers");
-
-    let savedNews =
-        localStorage.getItem("transferNewsData");
-
-    let savedWindow =
-        localStorage.getItem("transferWindowOpen");
-
-    let savedDeadline =
-        localStorage.getItem("transferDeadline");
-
-
-    if(savedBudgets){
-
-        clubBudgets =
-            JSON.parse(savedBudgets);
-
+    /* Check budget */
+    if (budget < fee) {
+        alert("Not enough budget.");
+        return;
     }
 
+    let oldClub = playerTeams[playerName];
 
-    if(savedSignings){
-
-        clubSignings =
-            JSON.parse(savedSignings);
-
+    if (!oldClub) {
+        alert("Transfer error: player's original club was not found.");
+        return;
     }
 
-
-    if(savedSquads){
-
-        squads =
-            JSON.parse(savedSquads);
-
-    }
-
-
-    if(savedPlayerTeams){
-
-        playerTeams =
-            JSON.parse(savedPlayerTeams);
-
-    }
-
-
-    if(savedSignedPlayers){
-
-        signedPlayers =
-            JSON.parse(savedSignedPlayers);
-
-    }
-
-
-    if(savedNews){
-
-        transferNewsData =
-            JSON.parse(savedNews);
-
-    }
-
-
-    if(savedWindow !== null){
-
-        transferWindowOpen =
-            savedWindow === "true";
-
-    }
-
-
-    if(savedDeadline){
-
-        deadline =
-            new Date(Number(savedDeadline));
-
-    }else{
-
-        deadline = new Date();
-
-        deadline.setDate(
-            deadline.getDate() + 14
+    /* Prevent signing a player from your own club */
+    if (newClub === oldClub) {
+        alert(
+            "❌ Transfer Rejected!\n\n" +
+            playerName +
+            " is already a " +
+            oldClub +
+            " player."
         );
-
-        localStorage.setItem(
-            "transferDeadline",
-            deadline.getTime()
-        );
-
-    }
-
-}
-
-
-/* ==========================
-   RENDER TRANSFER NEWS
-========================== */
-
-function renderTransferNews(){
-
-    const news =
-        document.getElementById("transferNews");
-
-    if(!news){
         return;
     }
 
 
-    if(transferNewsData.length === 0){
+    /* =========================
+       PROCESS TRANSFER
+    ========================= */
 
-        news.innerHTML =
-            "<p>No transfer news yet.</p>";
+    budget = budget - fee;
+    squadCount = squadCount + 1;
 
-        return;
+    /* Add to My Team */
+    let team = document.getElementById("team-list");
+
+    let player = document.createElement("li");
+
+    player.textContent =
+        playerName + " | " + position + " ✅ Signed";
+
+    team.appendChild(player);
+
+
+    /* Disable button */
+    let button = document.getElementById(buttonId);
+
+    if (button) {
+
+        button.textContent = "✅ Signed";
+        button.disabled = true;
+
+    }
+
+    /* Remember signed button */
+    if (!signedButtons.includes(buttonId)) {
+
+        signedButtons.push(buttonId);
 
     }
 
 
-    news.innerHTML = "";
+    /* Remember signed player */
+    if (!signedPlayers.includes(playerName)) {
+
+        signedPlayers.push(playerName);
+
+    }
 
 
-    transferNewsData.forEach(function(item){
+    /* =========================
+       MOVE PLAYER BETWEEN SQUADS
+    ========================= */
 
-        let headline =
-            document.createElement("p");
+    let index = squads[oldClub].indexOf(playerName);
 
-        headline.innerHTML =
-            "🚨 <strong>BREAKING:</strong> " +
-            item.player +
-            " joins <strong>" +
-            item.newClub +
-            "</strong> from " +
-            item.oldClub +
-            " for <strong>UGX " +
-            Number(item.fee).toLocaleString() +
-            "</strong>.";
+    if (index !== -1) {
 
-        news.appendChild(headline);
+        squads[oldClub].splice(index, 1);
+
+    }
+
+    if (!squads[newClub].includes(playerName)) {
+
+        squads[newClub].push(playerName);
+
+    }
+
+    playerTeams[playerName] = newClub;
+
+
+    /* =========================
+       TRANSFER NEWS
+    ========================= */
+
+    let news = document.getElementById("transferNews");
+
+    if (
+        news.innerText.includes("No transfer news yet")
+    ) {
+
+        news.innerHTML = "";
+
+    }
+
+    let headline = document.createElement("p");
+
+    headline.innerHTML =
+        "🚨 <strong>BREAKING:</strong> " +
+        playerName +
+        " joins <strong>" +
+        newClub +
+        "</strong> from " +
+        oldClub +
+        " for <strong>UGX " +
+        fee.toLocaleString() +
+        "</strong>.";
+
+    news.prepend(headline);
+
+
+    /* =========================
+       UPDATE DASHBOARD
+    ========================= */
+
+    updateDashboard();
+
+    showSquad();
+
+
+    /* =========================
+       SAVE EVERYTHING
+    ========================= */
+
+    saveData();
+
+
+    alert(
+        playerName +
+        " transferred to " +
+        newClub
+    );
+}
+
+
+/* =========================
+   VIEW PROFILE
+========================= */
+
+function viewProfile(
+    name,
+    course,
+    year,
+    position,
+    rating,
+    fee,
+    photo
+) {
+
+    document.getElementById("profileModal").style.display = "block";
+
+    document.getElementById("playerPhoto").src = photo;
+
+    document.getElementById("playerName").textContent = name;
+
+    document.getElementById("playerCourse").textContent = course;
+
+    document.getElementById("playerYear").textContent = year;
+
+    document.getElementById("playerPosition").textContent = position;
+
+    document.getElementById("playerRating").textContent = rating;
+
+    document.getElementById("playerFee").textContent = fee;
+}
+
+
+function closeProfile() {
+
+    document.getElementById("profileModal").style.display = "none";
+
+}
+
+
+/* =========================
+   SHOW COURSE SQUAD
+========================= */
+
+function showSquad() {
+
+    const course =
+        document.getElementById("squadSelect").value;
+
+    const squadList =
+        document.getElementById("squadList");
+
+    if (course === "") {
+
+        squadList.innerHTML = "";
+
+        return;
+    }
+
+    let html = `
+    <div class="squad-box">
+
+        <h3>${course} Squad</h3>
+
+        <p>
+            Total Players:
+            ${squads[course].length}
+        </p>
+
+        <div class="squad-players">
+    `;
+
+
+    squads[course].forEach(function(player) {
+
+        html += `
+        <div class="squad-player">
+            👤 ${player}
+        </div>
+        `;
 
     });
 
+
+    html += `
+        </div>
+    </div>
+    `;
+
+    squadList.innerHTML = html;
 }
 
 
-/* ==========================
-   RENDER SIGNED BUTTONS
-========================== */
+/* =========================
+   MANAGER DASHBOARD
+========================= */
 
-function restoreSignedButtons(){
-
-    Object.keys(signedPlayers).forEach(
-        function(playerName){
-
-            let buttonId =
-                signedPlayers[playerName].buttonId;
-
-            let button =
-                document.getElementById(buttonId);
-
-            if(button){
-
-                button.disabled = true;
-
-                button.textContent =
-                    "✅ Signed";
-
-            }
-
-        }
-    );
-
-}
-
-
-/* ==========================
-   UPDATE MANAGER DASHBOARD
-========================== */
-
-function updateDashboard(){
+function updateDashboard() {
 
     let club =
         document.getElementById("clubSelect").value;
 
-
-    if(club === ""){
+    if (club === "") {
 
         document.querySelector(
             "#managerDashboard h3"
-        ).textContent =
-            "No Club Selected";
+        ).textContent = "No Club Selected";
 
         return;
-
     }
 
 
@@ -503,14 +464,12 @@ function updateDashboard(){
 
     document.getElementById(
         "managerBudget"
-    ).textContent =
-        clubBudgets[club];
+    ).textContent = budget;
 
 
     document.getElementById(
         "managerTransfers"
-    ).textContent =
-        clubSignings[club];
+    ).textContent = squadCount;
 
 
     document.getElementById(
@@ -523,460 +482,134 @@ function updateDashboard(){
         "managerWindow"
     ).textContent =
         transferWindowOpen
-        ? "🟢 OPEN"
-        : "🔴 CLOSED";
-
-
-    renderMyTeam();
-
+            ? "🟢 OPEN"
+            : "🔴 CLOSED";
 }
 
 
-/* ==========================
-   RENDER MY TEAM
-========================== */
+/* =========================
+   TRANSFER WINDOW
+========================= */
 
-function renderMyTeam(){
+function toggleWindow() {
 
-    const team =
-        document.getElementById("team-list");
+    transferWindowOpen =
+        !transferWindowOpen;
 
-    if(!team){
-        return;
+    let status =
+        document.getElementById("windowStatus");
+
+
+    if (transferWindowOpen) {
+
+        status.innerHTML =
+            "🟢 TRANSFER WINDOW OPEN";
+
+        status.style.color = "green";
+
+    } else {
+
+        status.innerHTML =
+            "🔴 TRANSFER WINDOW CLOSED";
+
+        status.style.color = "red";
     }
 
-
-    team.innerHTML = "";
-
-
-    if(loggedInClub === ""){
-
-        return;
-
-    }
-
-
-    Object.keys(signedPlayers).forEach(
-        function(playerName){
-
-            let transfer =
-                signedPlayers[playerName];
-
-
-            if(transfer.newClub === loggedInClub){
-
-                let player =
-                    document.createElement("li");
-
-                player.textContent =
-                    playerName +
-                    " | " +
-                    transfer.position +
-                    " ✅ Signed";
-
-                team.appendChild(player);
-
-            }
-
-        }
-    );
-
-}
-
-
-/* ==========================
-   SIGN PLAYER
-========================== */
-
-function signPlayer(
-    playerName,
-    fee,
-    position,
-    buttonId
-){
-
-    if(!transferWindowOpen){
-
-        alert(
-            "The transfer window is CLOSED."
-        );
-
-        return;
-
-    }
-
-
-    if(!loggedIn){
-
-        alert(
-            "Please log in as a manager first."
-        );
-
-        return;
-
-    }
-
-
-    let selectedClub =
-        document.getElementById(
-            "clubSelect"
-        ).value;
-
-
-    if(selectedClub === ""){
-
-        alert(
-            "Please select your club first."
-        );
-
-        return;
-
-    }
-
-
-    if(loggedInClub !== selectedClub){
-
-        alert(
-            "You can only manage your own club."
-        );
-
-        return;
-
-    }
-
-
-    /* Maximum 2 players per manager */
-
-    if(clubSignings[selectedClub] >= MAX_SIGNINGS){
-
-        alert(
-            "Maximum of 2 signings allowed for " +
-            selectedClub +
-            " Manager."
-        );
-
-        return;
-
-    }
-
-
-    /* Player already transferred */
-
-    if(signedPlayers[playerName]){
-
-        alert(
-            playerName +
-            " has already been signed by " +
-            signedPlayers[playerName].newClub +
-            "."
-        );
-
-        return;
-
-    }
-
-
-    /* Cannot sign your own player */
-
-    let oldClub =
-        playerTeams[playerName];
-
-
-    if(oldClub === selectedClub){
-
-        alert(
-            "❌ Transfer Rejected!\n\n" +
-            playerName +
-            " is already a " +
-            oldClub +
-            " player."
-        );
-
-        return;
-
-    }
-
-
-    /* Check budget */
-
-    if(clubBudgets[selectedClub] < fee){
-
-        alert(
-            "Not enough budget."
-        );
-
-        return;
-
-    }
-
-
-    /* Deduct fee */
-
-    clubBudgets[selectedClub] =
-        clubBudgets[selectedClub] - fee;
-
-
-    /* Increase manager signings */
-
-    clubSignings[selectedClub] =
-        clubSignings[selectedClub] + 1;
-
-
-    /* Remove player from old club */
-
-    if(
-        squads[oldClub] &&
-        squads[oldClub].includes(playerName)
-    ){
-
-        let index =
-            squads[oldClub].indexOf(
-                playerName
-            );
-
-        if(index !== -1){
-
-            squads[oldClub].splice(
-                index,
-                1
-            );
-
-        }
-
-    }
-
-
-    /* Add player to new club */
-
-    if(!squads[selectedClub]){
-
-        squads[selectedClub] = [];
-
-    }
-
-
-    squads[selectedClub].push(
-        playerName
-    );
-
-
-    /* Update player club */
-
-    playerTeams[playerName] =
-        selectedClub;
-
-
-    /* Save transfer */
-
-    signedPlayers[playerName] = {
-
-        oldClub: oldClub,
-
-        newClub: selectedClub,
-
-        fee: fee,
-
-        position: position,
-
-        buttonId: buttonId
-
-    };
-
-
-    /* Add transfer news */
-
-    transferNewsData.unshift({
-
-        player: playerName,
-
-        oldClub: oldClub,
-
-        newClub: selectedClub,
-
-        fee: fee
-
-    });
-
-
-    /* Disable button */
-
-    let button =
-        document.getElementById(buttonId);
-
-
-    if(button){
-
-        button.textContent =
-            "✅ Signed";
-
-        button.disabled = true;
-
-    }
-
-
-    /* Update page */
 
     updateDashboard();
 
-    showSquad();
-
-    renderTransferNews();
-
-
-    /* SAVE EVERYTHING */
-
-    saveData();
-
-
-    alert(
-        playerName +
-        " transferred to " +
-        selectedClub
-    );
-
 }
 
 
-/* ==========================
-   VIEW PLAYER PROFILE
-========================== */
+/* =========================
+   COUNTDOWN
+========================= */
 
-function viewProfile(
-    name,
-    course,
-    year,
-    position,
-    rating,
-    fee,
-    photo
-){
+function updateCountdown() {
 
-    document.getElementById(
-        "profileModal"
-    ).style.display = "block";
+    const now = new Date();
+
+    const difference =
+        deadline - now;
 
 
-    document.getElementById(
-        "playerPhoto"
-    ).src = photo;
+    if (difference <= 0) {
 
+        transferWindowOpen = false;
 
-    document.getElementById(
-        "playerName"
-    ).textContent = name;
-
-
-    document.getElementById(
-        "playerCourse"
-    ).textContent = course;
-
-
-    document.getElementById(
-        "playerYear"
-    ).textContent = year;
-
-
-    document.getElementById(
-        "playerPosition"
-    ).textContent = position;
-
-
-    document.getElementById(
-        "playerRating"
-    ).textContent = rating;
-
-
-    document.getElementById(
-        "playerFee"
-    ).textContent = fee;
-
-}
-
-
-/* ==========================
-   CLOSE PROFILE
-========================== */
-
-function closeProfile(){
-
-    document.getElementById(
-        "profileModal"
-    ).style.display = "none";
-
-}
-
-
-/* ==========================
-   SHOW COURSE SQUAD
-========================== */
-
-function showSquad(){
-
-    const course =
         document.getElementById(
-            "squadSelect"
-        ).value;
+            "windowStatus"
+        ).innerHTML =
+            "🔴 TRANSFER WINDOW CLOSED";
 
 
-    const squadList =
         document.getElementById(
-            "squadList"
-        );
+            "windowStatus"
+        ).style.color = "red";
 
 
-    if(course === ""){
+        document.getElementById(
+            "countdown"
+        ).innerHTML =
+            "Transfer deadline has passed.";
 
-        squadList.innerHTML = "";
+        updateDashboard();
 
         return;
-
     }
 
 
-    let html = `
-        <div class="squad-box">
-
-        <h3>${course} Squad</h3>
-
-        <p>
-        Total Players:
-        ${squads[course].length}
-        </p>
-
-        <div class="squad-players">
-    `;
+    let days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
 
 
-    squads[course].forEach(
-        function(player){
-
-            html += `
-                <div class="squad-player">
-                    👤 ${player}
-                </div>
-            `;
-
-        }
-    );
+    let hours =
+        Math.floor(
+            (difference %
+                (1000 * 60 * 60 * 24)) /
+            (1000 * 60 * 60)
+        );
 
 
-    html += `
-        </div>
-        </div>
-    `;
+    let minutes =
+        Math.floor(
+            (difference %
+                (1000 * 60 * 60)) /
+            (1000 * 60)
+        );
 
 
-    squadList.innerHTML =
-        html;
+    let seconds =
+        Math.floor(
+            (difference %
+                (1000 * 60)) /
+            1000
+        );
 
+
+    document.getElementById(
+        "countdown"
+    ).innerHTML =
+        "⏳ " +
+        days +
+        " Days " +
+        hours +
+        " Hours " +
+        minutes +
+        " Minutes " +
+        seconds +
+        " Seconds Remaining";
 }
 
 
-/* ==========================
+/* =========================
    MANAGER LOGIN
-========================== */
+========================= */
 
-function loginManager(){
+function loginManager() {
 
     let club =
         document.getElementById(
@@ -990,21 +623,20 @@ function loginManager(){
         ).value;
 
 
-    if(club === ""){
+    if (club === "") {
 
         alert(
             "Please select your club first."
         );
 
         return;
-
     }
 
 
-    if(
+    if (
         password ===
         managerPasswords[club]
-    ){
+    ) {
 
         loggedIn = true;
 
@@ -1034,27 +666,22 @@ function loginManager(){
         updateDashboard();
 
 
-        alert(
-            "Login successful!"
-        );
+        alert("Login successful!");
 
 
-    }else{
+    } else {
 
-        alert(
-            "Incorrect password."
-        );
+        alert("Incorrect password.");
 
     }
-
 }
 
 
-/* ==========================
+/* =========================
    ADMIN LOGIN
-========================== */
+========================= */
 
-function loginAdmin(){
+function loginAdmin() {
 
     let password =
         document.getElementById(
@@ -1062,7 +689,7 @@ function loginAdmin(){
         ).value;
 
 
-    if(password === adminPassword){
+    if (password === adminPassword) {
 
         adminLoggedIn = true;
 
@@ -1073,41 +700,369 @@ function loginAdmin(){
             "👑 Admin Logged In";
 
 
-        let resetButton =
-            document.getElementById(
-                "adminResetBtn"
-            );
+        document.getElementById(
+            "adminResetBtn"
+        ).style.display =
+            "inline-block";
 
 
-        if(resetButton){
-
-            resetButton.style.display =
-                "inline-block";
-
-        }
+        alert("Welcome Admin!");
 
 
-        alert(
-            "Welcome Admin!"
-        );
-
-
-    }else{
+    } else {
 
         alert(
             "Incorrect Admin Password."
         );
 
     }
-
 }
 
 
-/* ==========================
-   RESET MARKET
-========================== */
+/* =========================
+   SAVE DATA
+========================= */
 
-function resetMarket(){
+function saveData() {
+
+    localStorage.setItem(
+        "budget",
+        budget
+    );
+
+
+    localStorage.setItem(
+        "squadCount",
+        squadCount
+    );
+
+
+    localStorage.setItem(
+        "signedButtons",
+        JSON.stringify(
+            signedButtons
+        )
+    );
+
+
+    localStorage.setItem(
+        "signedPlayers",
+        JSON.stringify(
+            signedPlayers
+        )
+    );
+
+
+    localStorage.setItem(
+        "playerTeams",
+        JSON.stringify(
+            playerTeams
+        )
+    );
+
+
+    localStorage.setItem(
+        "squads",
+        JSON.stringify(
+            squads
+        )
+    );
+
+
+    let teamList =
+        document.getElementById(
+            "team-list"
+        );
+
+    if (teamList) {
+
+        localStorage.setItem(
+            "teamList",
+            teamList.innerHTML
+        );
+
+    }
+
+
+    let transferNews =
+        document.getElementById(
+            "transferNews"
+        );
+
+    if (transferNews) {
+
+        localStorage.setItem(
+            "transferNews",
+            transferNews.innerHTML
+        );
+
+    }
+}
+
+
+/* =========================
+   LOAD DATA
+========================= */
+
+function loadData() {
+
+    let savedBudget =
+        localStorage.getItem("budget");
+
+
+    let savedSquadCount =
+        localStorage.getItem("squadCount");
+
+
+    let savedSignedButtons =
+        localStorage.getItem(
+            "signedButtons"
+        );
+
+
+    let savedSignedPlayers =
+        localStorage.getItem(
+            "signedPlayers"
+        );
+
+
+    let savedPlayerTeams =
+        localStorage.getItem(
+            "playerTeams"
+        );
+
+
+    let savedSquads =
+        localStorage.getItem(
+            "squads"
+        );
+
+
+    let savedTeamList =
+        localStorage.getItem(
+            "teamList"
+        );
+
+
+    let savedTransferNews =
+        localStorage.getItem(
+            "transferNews"
+        );
+
+
+    /* Budget */
+
+    if (savedBudget !== null) {
+
+        budget =
+            Number(savedBudget);
+
+    }
+
+
+    /* Squad count */
+
+    if (savedSquadCount !== null) {
+
+        squadCount =
+            Number(savedSquadCount);
+
+    }
+
+
+    /* Signed buttons */
+
+    if (savedSignedButtons !== null) {
+
+        try {
+
+            signedButtons =
+                JSON.parse(
+                    savedSignedButtons
+                );
+
+        } catch (error) {
+
+            signedButtons = [];
+
+        }
+
+    }
+
+
+    /* Signed players */
+
+    if (savedSignedPlayers !== null) {
+
+        try {
+
+            signedPlayers =
+                JSON.parse(
+                    savedSignedPlayers
+                );
+
+        } catch (error) {
+
+            signedPlayers = [];
+
+        }
+
+    }
+
+
+    /* Player teams */
+
+    if (savedPlayerTeams !== null) {
+
+        try {
+
+            playerTeams =
+                JSON.parse(
+                    savedPlayerTeams
+                );
+
+        } catch (error) {
+
+            console.log(
+                "Could not load player teams."
+            );
+
+        }
+
+    }
+
+
+    /* Squads */
+
+    if (savedSquads !== null) {
+
+        try {
+
+            squads =
+                JSON.parse(
+                    savedSquads
+                );
+
+        } catch (error) {
+
+            console.log(
+                "Could not load squads."
+            );
+
+        }
+
+    }
+
+
+    /* My Team */
+
+    if (savedTeamList !== null) {
+
+        let teamList =
+            document.getElementById(
+                "team-list"
+            );
+
+        if (teamList) {
+
+            teamList.innerHTML =
+                savedTeamList;
+
+        }
+
+    }
+
+
+    /* Transfer News */
+
+    if (savedTransferNews !== null) {
+
+        let transferNews =
+            document.getElementById(
+                "transferNews"
+            );
+
+        if (transferNews) {
+
+            transferNews.innerHTML =
+                savedTransferNews;
+
+        }
+
+    }
+
+
+    /* Restore signed buttons */
+
+    signedButtons.forEach(
+        function(id) {
+
+            let button =
+                document.getElementById(id);
+
+            if (button) {
+
+                button.disabled = true;
+
+                button.textContent =
+                    "✅ Signed";
+
+            }
+
+        }
+    );
+
+
+    /* Update dashboard */
+
+    if (
+        document.getElementById(
+            "managerBudget"
+        )
+    ) {
+
+        document.getElementById(
+            "managerBudget"
+        ).textContent =
+            budget;
+
+    }
+
+
+    if (
+        document.getElementById(
+            "managerSquad"
+        )
+    ) {
+
+        document.getElementById(
+            "managerSquad"
+        ).textContent =
+            squadCount;
+
+    }
+
+
+    if (
+        document.getElementById(
+            "managerTransfers"
+        )
+    ) {
+
+        document.getElementById(
+            "managerTransfers"
+        ).textContent =
+            squadCount;
+
+    }
+}
+
+
+/* =========================
+   RESET MARKET
+========================= */
+
+function resetMarket() {
 
     let password =
         prompt(
@@ -1115,14 +1070,13 @@ function resetMarket(){
         );
 
 
-    if(password !== adminPassword){
+    if (password !== adminPassword) {
 
         alert(
             "Wrong Admin Password!"
         );
 
         return;
-
     }
 
 
@@ -1135,152 +1089,29 @@ function resetMarket(){
 
 
     location.reload();
-
 }
 
 
-/* ==========================
-   TRANSFER WINDOW
-========================== */
+/* =========================
+   PAGE STARTUP
+========================= */
 
-function toggleWindow(){
+window.onload = function() {
 
-    transferWindowOpen =
-        !transferWindowOpen;
-
-
-    let status =
-        document.getElementById(
-            "windowStatus"
-        );
-
-
-    if(transferWindowOpen){
-
-        status.innerHTML =
-            "🟢 TRANSFER WINDOW OPEN";
-
-        status.style.color =
-            "green";
-
-    }else{
-
-        status.innerHTML =
-            "🔴 TRANSFER WINDOW CLOSED";
-
-        status.style.color =
-            "red";
-
-    }
-
-
-    saveData();
-
-}
-
-
-/* ==========================
-   COUNTDOWN
-========================== */
-
-function updateCountdown(){
-
-    const now =
-        new Date();
-
-
-    const difference =
-        deadline - now;
-
-
-    if(difference <= 0){
-
-        transferWindowOpen =
-            false;
-
-
-        document.getElementById(
-            "windowStatus"
-        ).innerHTML =
-            "🔴 TRANSFER WINDOW CLOSED";
-
-
-        document.getElementById(
-            "countdown"
-        ).innerHTML =
-            "Transfer deadline has passed.";
-
-
-        saveData();
-
-        return;
-
-    }
-
-
-    let days =
-        Math.floor(
-            difference /
-            (1000 * 60 * 60 * 24)
-        );
-
-
-    let hours =
-        Math.floor(
-            (
-                difference %
-                (1000 * 60 * 60 * 24)
-            ) /
-            (1000 * 60 * 60)
-        );
-
-
-    let minutes =
-        Math.floor(
-            (
-                difference %
-                (1000 * 60 * 60)
-            ) /
-            (1000 * 60)
-        );
-
-
-    let seconds =
-        Math.floor(
-            (
-                difference %
-                (1000 * 60)
-            ) /
-            1000
-        );
-
-
-    document.getElementById(
-        "countdown"
-    ).innerHTML =
-
-        "⏳ " +
-        days +
-        " Days " +
-        hours +
-        " Hours " +
-        minutes +
-        " Minutes " +
-        seconds +
-        " Seconds Remaining";
-
-}
-
-
-/* ==========================
-   PAGE START
-========================== */
-
-window.onload = function(){
-
+    /* Load saved market data first */
     loadData();
 
 
+    /* Countdown */
+    updateCountdown();
+
+    setInterval(
+        updateCountdown,
+        1000
+    );
+
+
+    /* Restore manager login */
     let savedLogin =
         localStorage.getItem(
             "loggedIn"
@@ -1293,12 +1124,15 @@ window.onload = function(){
         );
 
 
-    if(savedLogin === "true"){
+    if (
+        savedLogin === "true" &&
+        savedClub
+    ) {
 
         loggedIn = true;
 
         loggedInClub =
-            savedClub || "";
+            savedClub;
 
 
         let loginStatus =
@@ -1307,19 +1141,32 @@ window.onload = function(){
             );
 
 
-        if(loginStatus){
+        if (loginStatus) {
 
             loginStatus.innerHTML =
                 "✅ Logged in as " +
-                loggedInClub +
+                savedClub +
                 " Manager";
 
         }
 
+
+        let clubSelect =
+            document.getElementById(
+                "clubSelect"
+            );
+
+
+        if (clubSelect) {
+
+            clubSelect.value =
+                savedClub;
+
+        }
+
+
+        updateDashboard();
+
     }
 
-
-    updateCountdown();
-
-
-    setInt
+};
