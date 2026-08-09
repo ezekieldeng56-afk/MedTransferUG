@@ -993,19 +993,39 @@ function loadData() {
                 "transferNews"
             );
 
-        if (transferNews) {
+                if (transferNews) {
 
             transferNews.innerHTML =
                 savedTransferNews;
 
         }
-let savedManagerSignings =
-    localStorage.getItem("managerSignings");
 
-if (savedManagerSignings !== null) {
-    managerSignings = JSON.parse(savedManagerSignings);
-}
     }
+
+    /* Restore manager signing limits */
+
+    let savedManagerSignings =
+        localStorage.getItem("managerSignings");
+
+    if (savedManagerSignings !== null) {
+
+        try {
+
+            managerSignings =
+                JSON.parse(savedManagerSignings);
+
+        } catch (error) {
+
+            managerSignings = {};
+
+        }
+
+    }
+
+
+    /* Restore signed buttons */
+
+    signedButtons.forEach(
 
 
     /* Restore signed buttons */
