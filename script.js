@@ -1,6 +1,7 @@
 let squadCount = 0;
 let budget = 40000;
 let signedButtons = [];
+let managerSignings = {};
 let signedPlayers = [];
 let transferWindowOpen = true;
 
@@ -180,10 +181,16 @@ function signPlayer(playerName, fee, position, buttonId) {
     }
 
     /* Maximum 2 players */
-    if (squadCount >= 2) {
-        alert("Maximum of 2 signings allowed per manager.");
-        return;
-    }
+    let currentClub = document.getElementById("clubSelect").value;
+
+if (!managerSignings[currentClub]) {
+    managerSignings[currentClub] = 0;
+}
+
+if (managerSignings[currentClub] >= 2) {
+    alert("Maximum of 2 signings allowed for " + currentClub + " Manager.");
+    return;
+}
 
     /* Prevent same player being signed twice */
     if (signedPlayers.includes(playerName)) {
@@ -227,6 +234,7 @@ function signPlayer(playerName, fee, position, buttonId) {
 
     budget = budget - fee;
     squadCount = squadCount + 1;
+    managerSignings[currentClub] = managerSignings[currentClub] + 1;
 
     /* Add to My Team */
     let team = document.getElementById("team-list");
@@ -795,7 +803,10 @@ function saveData() {
             "transferNews",
             transferNews.innerHTML
         );
-
+localStorage.setItem(
+    "managerSignings",
+    JSON.stringify(managerSignings)
+);
     }
 }
 
@@ -988,7 +999,12 @@ function loadData() {
                 savedTransferNews;
 
         }
+let savedManagerSignings =
+    localStorage.getItem("managerSignings");
 
+if (savedManagerSignings !== null) {
+    managerSignings = JSON.parse(savedManagerSignings);
+}
     }
 
 
