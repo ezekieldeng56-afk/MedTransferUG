@@ -1,7 +1,6 @@
-welet squadCount = 0;
+let squadCount = 0;
 let budget = 40000;
 let signedButtons = [];
-let managerSignings = {};
 let signedPlayers = [];
 let transferWindowOpen = true;
 
@@ -181,21 +180,15 @@ function signPlayer(playerName, fee, position, buttonId) {
     }
 
     /* Maximum 2 players */
-    let currentClub = document.getElementById("clubSelect").value;
-
-if (!managerSignings[currentClub]) {
-    managerSignings[currentClub] = 0;
-}
-
-if (managerSignings[currentClub] >= 2) {
-    alert("Maximum of 2 signings allowed for " + currentClub + " Manager.");
-    return;
-}
+    if (squadCount >= 2) {
+        alert("Maximum of 2 signings allowed per manager.");
+        return;
+    }
 
     /* Prevent same player being signed twice */
     if (signedPlayers.includes(playerName)) {
         alert(
-            "❌ Transfer Rejected!\n\n" +
+            "âŒ Transfer Rejected!\n\n" +
             playerName +
             " has already been signed."
         );
@@ -218,7 +211,7 @@ if (managerSignings[currentClub] >= 2) {
     /* Prevent signing a player from your own club */
     if (newClub === oldClub) {
         alert(
-            "❌ Transfer Rejected!\n\n" +
+            "âŒ Transfer Rejected!\n\n" +
             playerName +
             " is already a " +
             oldClub +
@@ -234,7 +227,6 @@ if (managerSignings[currentClub] >= 2) {
 
     budget = budget - fee;
     squadCount = squadCount + 1;
-    managerSignings[currentClub] = managerSignings[currentClub] + 1;
 
     /* Add to My Team */
     let team = document.getElementById("team-list");
@@ -242,7 +234,7 @@ if (managerSignings[currentClub] >= 2) {
     let player = document.createElement("li");
 
     player.textContent =
-        playerName + " | " + position + " ✅ Signed";
+        playerName + " | " + position + " âœ… Signed";
 
     team.appendChild(player);
 
@@ -252,7 +244,7 @@ if (managerSignings[currentClub] >= 2) {
 
     if (button) {
 
-        button.textContent = "✅ Signed";
+        button.textContent = "âœ… Signed";
         button.disabled = true;
 
     }
@@ -311,7 +303,7 @@ if (managerSignings[currentClub] >= 2) {
     let headline = document.createElement("p");
 
     headline.innerHTML =
-        "🚨 <strong>BREAKING:</strong> " +
+        "ðŸš¨ <strong>BREAKING:</strong> " +
         playerName +
         " joins <strong>" +
         newClub +
@@ -424,7 +416,7 @@ function showSquad() {
 
         html += `
         <div class="squad-player">
-            👤 ${player}
+            ðŸ‘¤ ${player}
         </div>
         `;
 
@@ -490,8 +482,8 @@ function updateDashboard() {
         "managerWindow"
     ).textContent =
         transferWindowOpen
-            ? "🟢 OPEN"
-            : "🔴 CLOSED";
+            ? "ðŸŸ¢ OPEN"
+            : "ðŸ”´ CLOSED";
 }
 
 
@@ -511,14 +503,14 @@ function toggleWindow() {
     if (transferWindowOpen) {
 
         status.innerHTML =
-            "🟢 TRANSFER WINDOW OPEN";
+            "ðŸŸ¢ TRANSFER WINDOW OPEN";
 
         status.style.color = "green";
 
     } else {
 
         status.innerHTML =
-            "🔴 TRANSFER WINDOW CLOSED";
+            "ðŸ”´ TRANSFER WINDOW CLOSED";
 
         status.style.color = "red";
     }
@@ -548,7 +540,7 @@ function updateCountdown() {
         document.getElementById(
             "windowStatus"
         ).innerHTML =
-            "🔴 TRANSFER WINDOW CLOSED";
+            "ðŸ”´ TRANSFER WINDOW CLOSED";
 
 
         document.getElementById(
@@ -601,7 +593,7 @@ function updateCountdown() {
     document.getElementById(
         "countdown"
     ).innerHTML =
-        "⏳ " +
+        "â³ " +
         days +
         " Days " +
         hours +
@@ -666,7 +658,7 @@ function loginManager() {
         document.getElementById(
             "loginStatus"
         ).innerHTML =
-            "✅ Logged in as " +
+            "âœ… Logged in as " +
             club +
             " Manager";
 
@@ -705,7 +697,7 @@ function loginAdmin() {
         document.getElementById(
             "adminStatus"
         ).innerHTML =
-            "👑 Admin Logged In";
+            "ðŸ‘‘ Admin Logged In";
 
 
         document.getElementById(
@@ -803,10 +795,7 @@ function saveData() {
             "transferNews",
             transferNews.innerHTML
         );
-localStorage.setItem(
-    "managerSignings",
-    JSON.stringify(managerSignings)
-);
+
     }
 }
 
@@ -991,39 +980,16 @@ function loadData() {
         let transferNews =
             document.getElementById(
                 "transferNews"
-            
+            );
 
-                if (transferNews) {
+        if (transferNews) {
 
             transferNews.innerHTML =
                 savedTransferNews;
 
-        );
-
-
-
-    let savedManagerSignings =
-        localStorage.getItem("managerSignings");
-
-    if (savedManagerSignings !== null) {
-
-        try {
-
-            managerSignings =
-                JSON.parse(savedManagerSignings);
-
-        } catch (error) {
-
-            managerSignings = {};
-
         }
 
     }
-
-
-    /* Restore signed buttons */
-
-    signedButtons.forEach(
 
 
     /* Restore signed buttons */
@@ -1039,7 +1005,7 @@ function loadData() {
                 button.disabled = true;
 
                 button.textContent =
-                    "✅ Signed";
+                    "âœ… Signed";
 
             }
 
@@ -1118,7 +1084,7 @@ function resetMarket() {
 
 
     alert(
-        "✅ Transfer Market Reset Successfully!"
+        "âœ… Transfer Market Reset Successfully!"
     );
 
 
@@ -1178,7 +1144,7 @@ window.onload = function() {
         if (loginStatus) {
 
             loginStatus.innerHTML =
-                "✅ Logged in as " +
+                "âœ… Logged in as " +
                 savedClub +
                 " Manager";
 
@@ -1204,3 +1170,4 @@ window.onload = function() {
     }
 
 };
+    
