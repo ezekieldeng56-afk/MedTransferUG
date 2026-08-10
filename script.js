@@ -187,11 +187,11 @@ function signPlayer(playerName, fee, position, buttonId) {
 
     /* Prevent same player being signed twice */
     if (signedPlayers.includes(playerName)) {
-        alert(
-            "âŒ Transfer Rejected!\n\n" +
-            playerName +
-            " has already been signed."
-        );
+    alert(
+        "\u274C Transfer Rejected!\n\n" +
+        playerName +
+        " has already been signed."
+    );
         return;
     }
 
@@ -211,9 +211,9 @@ function signPlayer(playerName, fee, position, buttonId) {
     /* Prevent signing a player from your own club */
     if (newClub === oldClub) {
         alert(
-            "âŒ Transfer Rejected!\n\n" +
-            playerName +
-            " is already a " +
+    "\u274C Transfer Rejected!\n\n" +
+    playerName +
+    " is already a " +
             oldClub +
             " player."
         );
@@ -234,7 +234,7 @@ function signPlayer(playerName, fee, position, buttonId) {
     let player = document.createElement("li");
 
     player.textContent =
-        playerName + " | " + position + " âœ… Signed";
+    playerName + " | " + position + " \u2705 Signed";
 
     team.appendChild(player);
 
@@ -244,7 +244,8 @@ function signPlayer(playerName, fee, position, buttonId) {
 
     if (button) {
 
-        button.textContent = "âœ… Signed";
+        button.textContent =
+    "\u2705 Signed";
         button.disabled = true;
 
     }
@@ -303,8 +304,8 @@ function signPlayer(playerName, fee, position, buttonId) {
     let headline = document.createElement("p");
 
     headline.innerHTML =
-        "ðŸš¨ <strong>BREAKING:</strong> " +
-        playerName +
+    "\uD83D\uDEA8 <strong>BREAKING:</strong> " +
+    playerName +
         " joins <strong>" +
         newClub +
         "</strong> from " +
@@ -507,14 +508,14 @@ function toggleWindow() {
     if (transferWindowOpen) {
 
         status.innerHTML =
-            "ðŸŸ¢ TRANSFER WINDOW OPEN";
+    "\uD83D\uDFE2 TRANSFER WINDOW OPEN";
 
         status.style.color = "green";
 
     } else {
 
         status.innerHTML =
-            "ðŸ”´ TRANSFER WINDOW CLOSED";
+    "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
 
         status.style.color = "red";
     }
@@ -542,9 +543,9 @@ function updateCountdown() {
         transferWindowOpen = false;
 
         document.getElementById(
-            "windowStatus"
-        ).innerHTML =
-            "ðŸ”´ TRANSFER WINDOW CLOSED";
+    "windowStatus"
+).innerHTML =
+    "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
 
 
         document.getElementById(
@@ -1009,7 +1010,7 @@ function loadData() {
                 button.disabled = true;
 
                 button.textContent =
-                    "âœ… Signed";
+    "\u2705 Signed";
 
             }
 
@@ -1088,8 +1089,8 @@ function resetMarket() {
 
 
     alert(
-        "âœ… Transfer Market Reset Successfully!"
-    );
+    "\u2705 Transfer Market Reset Successfully!"
+);
 
 
     location.reload();
@@ -1147,10 +1148,10 @@ window.onload = function() {
 
         if (loginStatus) {
 
-            loginStatus.innerHTML =
-                "âœ… Logged in as " +
-                savedClub +
-                " Manager";
+           loginStatus.innerHTML =
+    "\u2705 Logged in as " +
+    savedClub +
+    " Manager"; 
 
         }
 
