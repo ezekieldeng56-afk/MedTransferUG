@@ -482,8 +482,12 @@ function updateDashboard() {
         "managerWindow"
     ).textContent =
         transferWindowOpen
-            ? "ðŸŸ¢ OPEN"
-            : "ðŸ”´ CLOSED";
+            document.getElementById(
+    "managerWindow"
+).textContent =
+    transferWindowOpen
+        ? "🟢 OPEN"
+        : "🔴 CLOSED";
 }
 
 
@@ -658,7 +662,7 @@ function loginManager() {
         document.getElementById(
             "loginStatus"
         ).innerHTML =
-            "âœ… Logged in as " +
+            "✅ Logged in as " +
             club +
             " Manager";
 
@@ -697,7 +701,7 @@ function loginAdmin() {
         document.getElementById(
             "adminStatus"
         ).innerHTML =
-            "ðŸ‘‘ Admin Logged In";
+            "✅ Admin Logged In";
 
 
         document.getElementById(
