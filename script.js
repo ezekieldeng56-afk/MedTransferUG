@@ -414,9 +414,9 @@ function showSquad() {
 
     squads[course].forEach(function(player) {
 
-        html += `
+    html += `
         <div class="squad-player">
-            ðŸ‘¤ ${player}
+            👤 ${player}
         </div>
         `;
 
@@ -593,7 +593,7 @@ function updateCountdown() {
     document.getElementById(
         "countdown"
     ).innerHTML =
-        "â³ " +
+        "⏳ " +
         days +
         " Days " +
         hours +
