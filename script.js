@@ -1,4 +1,4 @@
-let squadCount = 0;
+welet squadCount = 0;
 let budget = 40000;
 let signedButtons = [];
 let managerSignings = {};
@@ -991,18 +991,16 @@ function loadData() {
         let transferNews =
             document.getElementById(
                 "transferNews"
-            );
+            
 
                 if (transferNews) {
 
             transferNews.innerHTML =
                 savedTransferNews;
 
-        }
+        );
 
-    }
 
-    /* Restore manager signing limits */
 
     let savedManagerSignings =
         localStorage.getItem("managerSignings");
