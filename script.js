@@ -2,6 +2,21 @@ let squadCount = 0;
 let budget = 40000;
 let signedButtons = [];
 let signedPlayers = [];
+
+let managerSignings = {};
+
+let managerBudgets = {
+    BPHARM: 40000,
+    BDS: 40000,
+    BNUR: 40000,
+    BMR: 40000,
+    BSLT: 40000,
+    BMAM: 40000,
+    BBSB: 40000,
+    BCYT: 40000,
+    BOPT: 40000
+};
+
 let transferWindowOpen = true;
 
 const deadline = new Date();
@@ -179,11 +194,22 @@ function signPlayer(playerName, fee, position, buttonId) {
         return;
     }
 
-    /* Maximum 2 players */
-    if (squadCount >= 2) {
-        alert("Maximum of 2 signings allowed per manager.");
-        return;
-    }
+    /* Maximum 2 players per manager */
+
+let currentClub = newClub;
+
+if (!managerSignings[currentClub]) {
+    managerSignings[currentClub] = 0;
+}
+
+if (managerSignings[currentClub] >= 2) {
+    alert(
+        "Maximum of 2 signings allowed for " +
+        currentClub +
+        " Manager."
+    );
+    return;
+}
 
     /* Prevent same player being signed twice */
     if (signedPlayers.includes(playerName)) {
@@ -195,11 +221,18 @@ function signPlayer(playerName, fee, position, buttonId) {
         return;
     }
 
-    /* Check budget */
-    if (budget < fee) {
-        alert("Not enough budget.");
-        return;
-    }
+    /* Check manager budget */
+
+if (managerBudgets[currentClub] < fee) {
+
+    alert(
+        "Not enough budget for " +
+        currentClub +
+        " Manager."
+    );
+
+    return;
+}
 
     let oldClub = playerTeams[playerName];
 
@@ -225,8 +258,13 @@ function signPlayer(playerName, fee, position, buttonId) {
        PROCESS TRANSFER
     ========================= */
 
-    budget = budget - fee;
-    squadCount = squadCount + 1;
+    managerBudgets[currentClub] =
+    managerBudgets[currentClub] - fee;
+
+managerSignings[currentClub] =
+    managerSignings[currentClub] + 1;
+
+squadCount = squadCount + 1;
 
     /* Add to My Team */
     let team = document.getElementById("team-list");
@@ -464,13 +502,15 @@ function updateDashboard() {
 
 
     document.getElementById(
-        "managerBudget"
-    ).textContent = budget;
+    "managerBudget"
+).textContent =
+    managerBudgets[club];
 
 
     document.getElementById(
-        "managerTransfers"
-    ).textContent = squadCount;
+    "managerTransfers"
+).textContent =
+    managerSignings[club] || 0;
 
 
     document.getElementById(
@@ -736,8 +776,14 @@ function saveData() {
         "squadCount",
         squadCount
     );
-
-
+localStorage.setItem(
+    "managerBudgets",
+    JSON.stringify(managerBudgets)
+);
+localStorage.setItem(
+    "managerSignings",
+    JSON.stringify(managerSignings)
+);
     localStorage.setItem(
         "signedButtons",
         JSON.stringify(
@@ -813,7 +859,11 @@ function loadData() {
 
     let savedSquadCount =
         localStorage.getItem("squadCount");
+let savedManagerBudgets =
+    localStorage.getItem("managerBudgets");
 
+let savedManagerSignings =
+    localStorage.getItem("managerSignings");
 
     let savedSignedButtons =
         localStorage.getItem(
@@ -869,7 +919,48 @@ function loadData() {
             Number(savedSquadCount);
 
     }
+/* Manager budgets */
 
+if (savedManagerBudgets !== null) {
+
+    try {
+
+        managerBudgets =
+            JSON.parse(
+                savedManagerBudgets
+            );
+
+    } catch (error) {
+
+        console.log(
+            "Could not load manager budgets."
+        );
+
+    }
+
+}
+
+
+/* Manager signings */
+
+if (savedManagerSignings !== null) {
+
+    try {
+
+        managerSignings =
+            JSON.parse(
+                savedManagerSignings
+            );
+
+    } catch (error) {
+
+        console.log(
+            "Could not load manager signings."
+        );
+
+    }
+
+}
 
     /* Signed buttons */
 
@@ -1031,31 +1122,41 @@ function loadData() {
 
 
     if (
-        document.getElementById(
-            "managerSquad"
-        )
-    ) {
+    document.getElementById(
+        "managerSquad"
+    )
+) {
+
+    let currentClub =
+        document.getElementById("clubSelect").value;
+
+    if (currentClub !== "") {
 
         document.getElementById(
             "managerSquad"
         ).textContent =
-            squadCount;
+            squads[currentClub].length;
 
     }
 
+}
 
-    if (
-        document.getElementById(
-            "managerTransfers"
-        )
-    ) {
 
-        document.getElementById(
-            "managerTransfers"
-        ).textContent =
-            squadCount;
+if (
+    document.getElementById(
+        "managerTransfers"
+    )
+) {
 
-    }
+    let currentClub =
+        document.getElementById("clubSelect").value;
+
+    document.getElementById(
+        "managerTransfers"
+    ).textContent =
+        managerSignings[currentClub] || 0;
+
+}
 }
 
 
