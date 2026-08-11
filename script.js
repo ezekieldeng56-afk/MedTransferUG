@@ -480,15 +480,11 @@ function updateDashboard() {
 
 
     document.getElementById(
-        "managerWindow"
-    ).textContent =
-        transferWindowOpen
-            document.getElementById(
     "managerWindow"
 ).textContent =
     transferWindowOpen
-        ? "🟢 OPEN"
-        : "🔴 CLOSED";
+        ? "\uD83D\uDFE2 OPEN"
+        : "\uD83D\uDD34 CLOSED";
 }
 
 
