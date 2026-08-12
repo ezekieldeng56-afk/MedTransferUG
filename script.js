@@ -266,16 +266,6 @@ managerSignings[currentClub] =
 
 squadCount = squadCount + 1;
 
-    /* Add to My Team */
-    let team = document.getElementById("team-list");
-
-    let player = document.createElement("li");
-
-    player.textContent =
-    playerName + " | " + position + " \u2705 Signed";
-
-    team.appendChild(player);
-
 
     /* Disable button */
     let button = document.getElementById(buttonId);
@@ -814,21 +804,6 @@ localStorage.setItem(
             squads
         )
     );
-
-
-    let teamList =
-        document.getElementById(
-            "team-list"
-        );
-
-    if (teamList) {
-
-        localStorage.setItem(
-            "teamList",
-            teamList.innerHTML
-        );
-
-    }
 
 
     let transferNews =
