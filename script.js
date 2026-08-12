@@ -523,7 +523,10 @@ function updateDashboard() {
 ========================= */
 
 function toggleWindow() {
-
+    if (!adminLoggedIn) {
+        alert("Only Admin can open or close the transfer window.");
+        return;
+    }
     transferWindowOpen =
         !transferWindowOpen;
 
