@@ -599,27 +599,40 @@ function updateCountdown() {
 
     if (difference <= 0) {
 
-        transferWindowOpen = false;
+    transferWindowOpen = false;
 
-        document.getElementById(
-    "windowStatus"
-).innerHTML =
-    "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
+    /* Save closed state */
+    localStorage.setItem(
+        "transferWindowOpen",
+        "false"
+    );
 
+    /* Stop countdown */
+    if (countdownInterval !== null) {
 
-        document.getElementById(
-            "windowStatus"
-        ).style.color = "red";
+        clearInterval(countdownInterval);
 
+        countdownInterval = null;
 
-        document.getElementById(
-            "countdown"
-        ).innerHTML =
-            "Transfer deadline has passed.";
+    }
 
-        updateDashboard();
+    document.getElementById(
+        "windowStatus"
+    ).innerHTML =
+        "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
 
-        return;
+    document.getElementById(
+        "windowStatus"
+    ).style.color = "red";
+
+    document.getElementById(
+        "countdown"
+    ).innerHTML =
+        "Transfer deadline has passed.";
+
+    updateDashboard();
+
+    return;
     }
 
 
