@@ -548,24 +548,35 @@ function toggleWindow() {
 
     if (transferWindowOpen) {
 
-        status.innerHTML =
-    "\uD83D\uDFE2 TRANSFER WINDOW OPEN";
+    status.innerHTML =
+        "\uD83D\uDFE2 TRANSFER WINDOW OPEN";
 
-        status.style.color = "green";
+    status.style.color = "green";
 
-    } else {
+    localStorage.setItem(
+        "transferWindowOpen",
+        "true"
+    );
 
-        status.innerHTML =
-    "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
+} else {
 
-        status.style.color = "red";
-        if (countdownInterval !== null) {
+    status.innerHTML =
+        "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
+
+    status.style.color = "red";
+
+    localStorage.setItem(
+        "transferWindowOpen",
+        "false"
+    );
+
+    if (countdownInterval !== null) {
 
         clearInterval(countdownInterval);
 
         countdownInterval = null;
 
-        }
+    }
     }
 
 
