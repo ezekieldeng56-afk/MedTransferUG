@@ -257,7 +257,19 @@ if (managerBudgets[currentClub] < fee) {
     /* =========================
        PROCESS TRANSFER
     ========================= */
+    /* Confirm transfer */
 
+    let confirmTransfer = confirm(
+        "Confirm Transfer?\n\n" +
+        "Player: " + playerName + "\n" +
+        "From: " + oldClub + "\n" +
+        "To: " + newClub + "\n" +
+        "Fee: UGX " + fee.toLocaleString()
+    );
+
+    if (!confirmTransfer) {
+        return;
+    }
     managerBudgets[currentClub] =
     managerBudgets[currentClub] - fee;
 
