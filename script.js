@@ -1195,12 +1195,12 @@ window.onload = function() {
 
 
     /* Countdown */
-    updateCountdown();
+updateCountdown();
 
-    setInterval(
-        updateCountdown,
-        1000
-    );
+countdownInterval = setInterval(
+    updateCountdown,
+    1000
+);
 
 
     /* Restore manager login */
