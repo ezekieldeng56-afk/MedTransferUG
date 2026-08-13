@@ -1234,7 +1234,30 @@ window.onload = function() {
             savedWindowState === "true";
 
     }
+/* Restore transfer window display */
 
+let windowStatus =
+    document.getElementById("windowStatus");
+
+if (windowStatus) {
+
+    if (transferWindowOpen) {
+
+        windowStatus.innerHTML =
+            "\uD83D\uDFE2 TRANSFER WINDOW OPEN";
+
+        windowStatus.style.color = "green";
+
+    } else {
+
+        windowStatus.innerHTML =
+            "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
+
+        windowStatus.style.color = "red";
+
+    }
+
+}
     /* Countdown */
     updateCountdown();
 
