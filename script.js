@@ -1211,14 +1211,28 @@ window.onload = function() {
     /* Load saved market data first */
     loadData();
 
+    /* Restore transfer window state */
+    let savedWindowState =
+        localStorage.getItem("transferWindowOpen");
+
+    if (savedWindowState !== null) {
+
+        transferWindowOpen =
+            savedWindowState === "true";
+
+    }
 
     /* Countdown */
-updateCountdown();
+    updateCountdown();
 
-countdownInterval = setInterval(
-    updateCountdown,
-    1000
-);
+    if (transferWindowOpen) {
+
+        countdownInterval = setInterval(
+            updateCountdown,
+            1000
+        );
+
+    }
 
 
     /* Restore manager login */
