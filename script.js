@@ -559,6 +559,13 @@ function toggleWindow() {
     "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
 
         status.style.color = "red";
+        if (countdownInterval !== null) {
+
+        clearInterval(countdownInterval);
+
+        countdownInterval = null;
+
+        }
     }
 
 
