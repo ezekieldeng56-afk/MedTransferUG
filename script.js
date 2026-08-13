@@ -2,7 +2,7 @@ let squadCount = 0;
 let budget = 40000;
 let signedButtons = [];
 let signedPlayers = [];
-
+let countdownInterval = null;
 let managerSignings = {};
 
 let managerBudgets = {
