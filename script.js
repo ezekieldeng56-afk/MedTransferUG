@@ -16,7 +16,7 @@ let managerBudgets = {
     BCYT: 40000,
     BOPT: 40000
 };
-const SUPABASE_URL = "https://fmhvcjidqpeyywylsqzy.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://fmhvcjidqpeyywylsqzy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2QjZptN6qnDQs_N9I6aAvw_ncY2iD33";
 
 const supabaseClient = window.supabase.createClient(
