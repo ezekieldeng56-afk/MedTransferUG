@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MedTransfer Login Test</title>
+</head>
+
+<body>
+
+<h2>MedTransfer Login Test</h2>
+
+<input
+    type="email"
+    id="email"
+    placeholder="Manager Email">
+
+<br><br>
+
+<input
+    type="password"
+    id="password"
+    placeholder="Password">
+
+<br><br>
+
+<button onclick="testLogin()">Test Login</button>
+
+<p id="result">Not tested</p>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://fmhvcjidqpeyywylsqzy.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2QjZptN6qnDQs_N9I6aAvw_ncY2iD33";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+async function testLogin() {
+
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
+
+    if (error) {
+        document.getElementById("result").textContent =
+            "❌ Login failed: " + error.message;
+        return;
+    }
+
+    document.getElementById("result").textContent =
+        "✅ Supabase login successful!";
+}
+</script>
+
+</body>
+</html>
