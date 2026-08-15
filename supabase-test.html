@@ -23,41 +23,75 @@
 
 <br><br>
 
-<button onclick="testLogin()">Test Login</button>
+<button id="loginButton">Test Login</button>
 
-<p id="result">Not tested</p>
+<p id="result">Checking Supabase...</p>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "https://fmhvcjidqpeyywylsqzy.supabase.co";
+const result = document.getElementById("result");
 
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2QjZptN6qnDQs_N9I6aAvw_ncY2iD33";
+if (!window.supabase) {
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
-);
+    result.textContent =
+        "❌ Supabase library did not load.";
 
-async function testLogin() {
+} else {
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    result.textContent =
+        "✅ Supabase library loaded. Ready to test.";
 
-    const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
+    const SUPABASE_URL =
+        "https://fmhvcjidqpeyywylsqzy.supabase.co";
 
-    if (error) {
-        document.getElementById("result").textContent =
-            "❌ Login failed: " + error.message;
-        return;
-    }
+    const SUPABASE_PUBLISHABLE_KEY =
+        "sb_publishable_2QjZptN6qnDQs_N9I6aAvw_ncY2iD33";
 
-    document.getElementById("result").textContent =
-        "✅ Supabase login successful!";
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_PUBLISHABLE_KEY
+        );
+
+    document.getElementById("loginButton").addEventListener(
+        "click",
+        async function () {
+
+            result.textContent = "⏳ Checking login...";
+
+            const email =
+                document.getElementById("email").value.trim();
+
+            const password =
+                document.getElementById("password").value;
+
+            if (!email || !password) {
+
+                result.textContent =
+                    "⚠️ Enter both email and password.";
+
+                return;
+            }
+
+            const { data, error } =
+                await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+            if (error) {
+
+                result.textContent =
+                    "❌ Login failed: " + error.message;
+
+                return;
+            }
+
+            result.textContent =
+                "✅ Supabase login successful!";
+        }
+    );
 }
 </script>
 
