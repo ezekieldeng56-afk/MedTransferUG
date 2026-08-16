@@ -170,11 +170,20 @@ button:hover{
 
 .dashboard {
     background: white;
+    color: #222 !important;
     border: 1px solid #ddd;
     border-radius: 12px;
     padding: 18px;
     margin: 15px 0;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+#managerDashboard,
+#managerDashboard h3,
+#managerDashboard p,
+#managerDashboard strong,
+#managerDashboard span {
+    color: #222 !important;
 }
 
 .dashboard h3 {
