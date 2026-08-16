@@ -168,16 +168,29 @@ button:hover{
 
 /* DASHBOARD */
 
-.dashboard{
-    background:white;
-    color:black;
-    width:95%;
-    max-width:600px;
-    margin:20px auto;
-    padding:20px;
-    border-radius:12px;
-    display:block;
-    clear:both;
+.dashboard {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 15px 0;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.dashboard p {
+    margin: 10px 0;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.dashboard p:last-child {
+    border-bottom: none;
 }
 
 /* COURSE SQUADS */
