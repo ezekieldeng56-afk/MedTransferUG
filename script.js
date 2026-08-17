@@ -533,12 +533,11 @@ function updateDashboard() {
         squads[club].length;
 
 
-    document.getElementById(
-    "managerWindow"
-).textContent =
-    transferWindowOpen
-        ? "\uD83D\uDFE2 OPEN"
-        : "\uD83D\uDD34 CLOSED";
+        document.getElementById(
+        "managerSquad"
+    ).textContent =
+        squads[club].length;
+
 }
 
 
