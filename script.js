@@ -18,8 +18,21 @@ let managerBudgets = {
 };
 let transferWindowOpen = true;
 
-const deadline = new Date();
-deadline.setDate(deadline.getDate() + 14);
+let deadline;
+
+let savedDeadline = localStorage.getItem("transferDeadline");
+
+if (savedDeadline) {
+    deadline = new Date(savedDeadline);
+} else {
+    deadline = new Date();
+    deadline.setDate(deadline.getDate() + 14);
+
+    localStorage.setItem(
+        "transferDeadline",
+        deadline.toISOString()
+    );
+}
 
 let adminLoggedIn = false;
 const adminPassword = "MedTransfer2027";
@@ -811,6 +824,10 @@ function saveData() {
         "squadCount",
         squadCount
     );
+    localStorage.setItem(
+    "transferWindowOpen",
+    transferWindowOpen
+);
 localStorage.setItem(
     "managerBudgets",
     JSON.stringify(managerBudgets)
@@ -881,10 +898,16 @@ function loadData() {
         localStorage.getItem("squadCount");
 let savedManagerBudgets =
     localStorage.getItem("managerBudgets");
-
+let savedTransferWindow =
+    localStorage.getItem("transferWindowOpen");
 let savedManagerSignings =
     localStorage.getItem("managerSignings");
+if (savedTransferWindow !== null) {
 
+    transferWindowOpen =
+        savedTransferWindow === "true";
+
+}
     let savedSignedButtons =
         localStorage.getItem(
             "signedButtons"
@@ -1107,22 +1130,25 @@ if (savedManagerSignings !== null) {
     /* Restore signed buttons */
 
     signedButtons.forEach(
-        function(id) {
+    function(id) {
 
-            let button =
-                document.getElementById(id);
+        let button =
+            document.getElementById(id);
 
-            if (button) {
+        if (button) {
 
-                button.disabled = true;
+            button.disabled = true;
 
-                button.textContent =
-    "\u2705 Signed";
+            button.textContent =
+                "✅ Signed";
 
-            }
+            button.style.opacity = "0.6";
+            button.style.cursor = "not-allowed";
 
         }
-    );
+
+    }
+);
 
 
     /* Update dashboard */
@@ -1133,10 +1159,17 @@ if (savedManagerSignings !== null) {
         )
     ) {
 
-        document.getElementById(
-            "managerBudget"
-        ).textContent =
-            budget;
+       let currentClub =
+    document.getElementById("clubSelect").value;
+
+if (currentClub !== "") {
+
+    document.getElementById(
+        "managerBudget"
+    ).textContent =
+        managerBudgets[currentClub];
+
+} 
 
     }
 
@@ -1329,4 +1362,21 @@ if (windowStatus) {
     }
 
 };
-    
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadData();
+
+        updateDashboard();
+
+        updateCountdown();
+
+        countdownInterval =
+            setInterval(
+                updateCountdown,
+                1000
+            );
+
+    }
+);    
