@@ -591,7 +591,7 @@ function toggleWindow() {
     }
     }
 
-
+saveData();
     updateDashboard();
 
 }
@@ -1211,7 +1211,78 @@ if (
 
 }
 }
+function restoreMarketDisplay() {
 
+    /* Restore signed buttons */
+
+    signedButtons.forEach(function(id) {
+
+        let button =
+            document.getElementById(id);
+
+        if (button) {
+
+            button.disabled = true;
+
+            button.textContent =
+                "✅ Signed";
+
+            button.style.opacity = "0.6";
+
+            button.style.cursor =
+                "not-allowed";
+
+        }
+
+    });
+
+
+    /* Restore transfer news */
+
+    let savedTransferNews =
+        localStorage.getItem("transferNews");
+
+    let transferNews =
+        document.getElementById("transferNews");
+
+    if (
+        transferNews &&
+        savedTransferNews !== null
+    ) {
+
+        transferNews.innerHTML =
+            savedTransferNews;
+
+    }
+
+
+    /* Restore manager dashboard */
+
+    let club =
+        document.getElementById("clubSelect").value;
+
+    if (club !== "") {
+
+        document.getElementById(
+            "managerBudget"
+        ).textContent =
+            managerBudgets[club] ?? 40000;
+
+        document.getElementById(
+            "managerTransfers"
+        ).textContent =
+            managerSignings[club] || 0;
+
+        document.getElementById(
+            "managerSquad"
+        ).textContent =
+            squads[club]
+                ? squads[club].length
+                : 0;
+
+    }
+
+        }
 
 /* =========================
    RESET MARKET
@@ -1362,21 +1433,42 @@ if (windowStatus) {
     }
 
 };
-document.addEventListener(
+ document.addEventListener(
     "DOMContentLoaded",
     function() {
 
         loadData();
 
-        updateDashboard();
+        setTimeout(function() {
 
-        updateCountdown();
+            restoreMarketDisplay();
 
-        countdownInterval =
-            setInterval(
-                updateCountdown,
-                1000
-            );
+            updateDashboard();
+
+            if (transferWindowOpen) {
+
+                updateCountdown();
+
+                countdownInterval =
+                    setInterval(
+                        updateCountdown,
+                        1000
+                    );
+
+            } else {
+
+                document.getElementById(
+                    "windowStatus"
+                ).innerHTML =
+                    "🔴 TRANSFER WINDOW CLOSED";
+
+                document.getElementById(
+                    "windowStatus"
+                ).style.color = "red";
+
+            }
+
+        }, 100);
 
     }
-);    
+);
