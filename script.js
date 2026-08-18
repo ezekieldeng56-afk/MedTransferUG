@@ -1152,64 +1152,16 @@ if (savedManagerSignings !== null) {
 
     /* Update dashboard */
 
-    if (
-        document.getElementById(
-            "managerBudget"
-        )
-    ) {
-
        let currentClub =
     document.getElementById("clubSelect").value;
 
 if (currentClub !== "") {
+updateDashboard();
 
-    document.getElementById(
-        "managerBudget"
-    ).textContent =
-        managerBudgets[currentClub];
-
-} 
-
-    }
-
-
-    if (
-    document.getElementById(
-        "managerSquad"
-    )
-) {
-
-    let currentClub =
-        document.getElementById("clubSelect").value;
-
-    if (currentClub !== "") {
-
-        document.getElementById(
-            "managerSquad"
-        ).textContent =
-            squads[currentClub].length;
-
-    }
+    
 
 }
 
-
-if (
-    document.getElementById(
-        "managerTransfers"
-    )
-) {
-
-    let currentClub =
-        document.getElementById("clubSelect").value;
-
-    document.getElementById(
-        "managerTransfers"
-    ).textContent =
-        managerSignings[currentClub] || 0;
-
-}
-}
 function restoreMarketDisplay() {
 
     /* Restore signed buttons */
