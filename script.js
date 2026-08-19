@@ -532,12 +532,6 @@ function updateDashboard() {
     ).textContent =
         squads[club].length;
 
-
-        document.getElementById(
-        "managerSquad"
-    ).textContent =
-        squads[club].length;
-
 }
 
 
