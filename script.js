@@ -426,7 +426,7 @@ function updateCountdown() {
   let seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
   document.getElementById("countdown").innerHTML =
-    "â³ " +
+    "⌛" +
     days +
     " Days " +
     hours +
