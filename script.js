@@ -1,3 +1,20 @@
+/* ============================================
+   SUPABASE CONNECTION
+============================================ */
+
+const SUPABASE_URL =
+    "https://fmhvcjidqpeyywylsqzy.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_2QjZptN6qnDQs_N9I6aAvw_ncY2iD33";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+let cloudSyncReady = false;
 let squadCount = 0;
 let budget = 40000;
 let signedButtons = [];
@@ -144,7 +161,7 @@ let playerTeams = {
 
 /* ========================= SIGN PLAYER ========================= */
 
-function signPlayer(playerName, fee, position, buttonId) {
+async function signPlayer(playerName, fee, position, buttonId) {
   if (!transferWindowOpen) {
     alert("The transfer window is CLOSED.");
     return;
@@ -288,7 +305,20 @@ function signPlayer(playerName, fee, position, buttonId) {
 
   saveData();
 
-  alert(playerName + " transferred to " + newClub);
+await uploadMedTransferState();
+
+await saveTransferNewsToCloud(
+    playerName,
+    oldClub,
+    newClub,
+    fee
+);
+
+alert(
+    playerName +
+    " transferred to " +
+    newClub
+);
 }
 
 /* ========================= VIEW PROFILE ========================= */
@@ -713,3 +743,492 @@ window.onload = function () {
     updateDashboard();
   }
 };
+/* ============================================
+   MEDTRANSFER CLOUD SYNC
+============================================ */
+
+async function uploadMedTransferState() {
+
+    try {
+
+        const state = {
+            managerBudgets: managerBudgets,
+            managerSignings: managerSignings,
+            signedButtons: signedButtons,
+            signedPlayers: signedPlayers,
+            playerTeams: playerTeams,
+            squads: squads,
+            transferWindowOpen: transferWindowOpen,
+            deadline: deadline
+                ? deadline.toISOString()
+                : null
+        };
+
+        const { error } =
+            await supabaseClient
+                .from("medtransfer_state")
+                .update({
+                    state: state,
+                    updated_at: new Date().toISOString()
+                })
+                .eq("id", 1);
+
+        if (error) {
+            console.error(
+                "Cloud save failed:",
+                error
+            );
+            return false;
+        }
+
+        cloudSyncReady = true;
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Cloud save error:",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+/* ============================================
+   DOWNLOAD SHARED STATE
+============================================ */
+
+async function downloadMedTransferState() {
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from("medtransfer_state")
+                .select("state")
+                .eq("id", 1)
+                .single();
+
+        if (error) {
+
+            console.error(
+                "Cloud load failed:",
+                error
+            );
+
+            return;
+        }
+
+        if (
+            !data ||
+            !data.state ||
+            Object.keys(data.state).length === 0
+        ) {
+            console.log(
+                "No cloud data yet."
+            );
+
+            return;
+        }
+
+        const cloud = data.state;
+
+
+        /* Restore budgets */
+
+        if (
+            cloud.managerBudgets &&
+            typeof cloud.managerBudgets === "object"
+        ) {
+            managerBudgets =
+                cloud.managerBudgets;
+        }
+
+
+        /* Restore signings */
+
+        if (
+            cloud.managerSignings &&
+            typeof cloud.managerSignings === "object"
+        ) {
+            managerSignings =
+                cloud.managerSignings;
+        }
+
+
+        /* Restore signed buttons */
+
+        if (
+            Array.isArray(
+                cloud.signedButtons
+            )
+        ) {
+            signedButtons =
+                cloud.signedButtons;
+        }
+
+
+        /* Restore signed players */
+
+        if (
+            Array.isArray(
+                cloud.signedPlayers
+            )
+        ) {
+            signedPlayers =
+                cloud.signedPlayers;
+        }
+
+
+        /* Restore player teams */
+
+        if (
+            cloud.playerTeams &&
+            typeof cloud.playerTeams === "object"
+        ) {
+            playerTeams =
+                cloud.playerTeams;
+        }
+
+
+        /* Restore squads */
+
+        if (
+            cloud.squads &&
+            typeof cloud.squads === "object"
+        ) {
+            squads =
+                cloud.squads;
+        }
+
+
+        /* Restore transfer window */
+
+        if (
+            typeof cloud.transferWindowOpen ===
+            "boolean"
+        ) {
+            transferWindowOpen =
+                cloud.transferWindowOpen;
+        }
+
+
+        /* Restore deadline */
+
+        if (cloud.deadline) {
+
+            const savedDeadline =
+                new Date(cloud.deadline);
+
+            if (
+                !Number.isNaN(
+                    savedDeadline.getTime()
+                )
+            ) {
+                deadline =
+                    savedDeadline;
+            }
+        }
+
+
+        /* Update website */
+
+        updateDashboard();
+        showSquad();
+
+        restoreSignedButtons();
+
+        updateCountdown();
+
+        console.log(
+            "✅ MedTransfer cloud data loaded."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Cloud download error:",
+            error
+        );
+    }
+}
+
+
+/* ============================================
+   RESTORE SIGNED BUTTONS
+============================================ */
+
+function restoreSignedButtons() {
+
+    if (
+        !Array.isArray(
+            signedButtons
+        )
+    ) {
+        return;
+    }
+
+    signedButtons.forEach(
+        function(buttonId) {
+
+            const button =
+                document.getElementById(
+                    buttonId
+                );
+
+            if (button) {
+
+                button.textContent =
+                    "✅ Signed";
+
+                button.disabled = true;
+            }
+        }
+    );
+}
+
+
+/* ============================================
+   SAVE TRANSFER NEWS TO CLOUD
+============================================ */
+
+async function saveTransferNewsToCloud(
+    playerName,
+    oldClub,
+    newClub,
+    fee
+) {
+
+    try {
+
+        const { error } =
+            await supabaseClient
+                .from("medtransfer_news")
+                .insert({
+                    player_name:
+                        playerName,
+
+                    old_club:
+                        oldClub,
+
+                    new_club:
+                        newClub,
+
+                    fee:
+                        fee
+                });
+
+        if (error) {
+
+            console.error(
+                "News save failed:",
+                error
+            );
+        }
+
+    } catch (error) {
+
+        console.error(
+            "News cloud error:",
+            error
+        );
+    }
+}
+
+
+/* ============================================
+   LOAD TRANSFER NEWS
+============================================ */
+
+async function loadTransferNews() {
+
+    try {
+
+        const { data, error } =
+            await supabaseClient
+                .from("medtransfer_news")
+                .select("*")
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
+
+        if (error) {
+
+            console.error(
+                "News load failed:",
+                error
+            );
+
+            return;
+        }
+
+        const news =
+            document.getElementById(
+                "transferNews"
+            );
+
+        if (!news) {
+            return;
+        }
+
+        if (
+            !data ||
+            data.length === 0
+        ) {
+
+            news.innerHTML =
+                "<p>No transfer news yet.</p>";
+
+            return;
+        }
+
+        news.innerHTML = "";
+
+        data.forEach(
+            function(item) {
+
+                const headline =
+                    document.createElement(
+                        "p"
+                    );
+
+                headline.innerHTML =
+                    "🚨 <strong>BREAKING:</strong> " +
+                    item.player_name +
+                    " joins <strong>" +
+                    item.new_club +
+                    "</strong> from " +
+                    item.old_club +
+                    " for <strong>UGX " +
+                    Number(
+                        item.fee
+                    ).toLocaleString() +
+                    "</strong>.";
+
+                news.appendChild(
+                    headline
+                );
+            }
+        );
+
+    } catch (error) {
+
+        console.error(
+            "News error:",
+            error
+        );
+    }
+}
+
+
+/* ============================================
+   REAL-TIME UPDATES
+============================================ */
+
+function startMedTransferRealtime() {
+
+    supabaseClient
+        .channel(
+            "medtransfer-live"
+        )
+
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table:
+                    "medtransfer_state"
+            },
+
+            async function(payload) {
+
+                console.log(
+                    "🔄 State updated by another device."
+                );
+
+                await downloadMedTransferState();
+
+            }
+        )
+
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table:
+                    "medtransfer_news"
+            },
+
+            async function(payload) {
+
+                console.log(
+                    "📰 New transfer news."
+                );
+
+                await loadTransferNews();
+
+            }
+        )
+
+        .subscribe(
+            function(status, error) {
+
+                console.log(
+                    "Realtime:",
+                    status
+                );
+
+                if (error) {
+
+                    console.error(
+                        "Realtime error:",
+                        error
+                    );
+                }
+            }
+        );
+}
+
+
+/* ============================================
+   START CLOUD SYSTEM
+============================================ */
+
+async function startMedTransferCloud() {
+
+    console.log(
+        "🌐 Connecting MedTransfer to Supabase..."
+    );
+
+    await downloadMedTransferState();
+
+    await loadTransferNews();
+
+    startMedTransferRealtime();
+
+    console.log(
+        "✅ MedTransfer cloud system ready."
+    );
+}
+
+
+/* ============================================
+   START
+============================================ */
+
+setTimeout(
+    function() {
+
+        startMedTransferCloud();
+
+    },
+    1000
+);
