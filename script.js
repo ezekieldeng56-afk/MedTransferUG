@@ -361,7 +361,11 @@ function showSquad() {
   let html = ` <div class="squad-box"> <h3>${course} Squad</h3> <p> Total Players: ${squads[course].length} </p> <div class="squad-players"> `;
 
   squads[course].forEach(function (player) {
-    html += ` <div class="squad-player"> ðŸ‘¤ ${player} </div> `;
+   html += `
+    <div class="squad-player">
+        ${player}
+    </div>
+`; 
   });
 
   html += ` </div> </div> `;
@@ -400,9 +404,8 @@ function updateDashboard() {
 
 /* ========================= TRANSFER WINDOW ========================= */
 
-function toggleWindow() {
+async function toggleWindow() {
 
-    /* Only Admin can control the transfer window */
     if (!adminLoggedIn) {
 
         alert(
@@ -429,18 +432,17 @@ function toggleWindow() {
         transferWindowOpen = false;
 
 
-        /* Stop EVERY countdown interval */
+        /* Stop countdown */
+
         if (countdownInterval !== null) {
 
-            clearInterval(
-                countdownInterval
-            );
+            clearInterval(countdownInterval);
 
             countdownInterval = null;
         }
 
 
-        /* Update status */
+        /* Change status */
 
         if (status) {
 
@@ -451,7 +453,7 @@ function toggleWindow() {
         }
 
 
-        /* Keep countdown stopped */
+        /* Change countdown message */
 
         if (countdown) {
 
@@ -460,10 +462,23 @@ function toggleWindow() {
         }
 
 
-        /* Save closed state */
+        /* Save locally */
 
         saveData();
 
+
+        /* Save CLOSED state to Supabase */
+
+        if (
+            typeof uploadMedTransferState ===
+            "function"
+        ) {
+
+            await uploadMedTransferState();
+        }
+
+
+        updateDashboard();
 
         return;
     }
@@ -477,9 +492,7 @@ function toggleWindow() {
 
 
     /*
-       IMPORTANT:
-       Opening the market starts a NEW 14-day
-       transfer period.
+       Start a NEW 14-day transfer window
     */
 
     deadline = new Date();
@@ -489,7 +502,7 @@ function toggleWindow() {
     );
 
 
-    /* Save the new deadline */
+    /* Save deadline locally */
 
     localStorage.setItem(
         "transferDeadline",
@@ -497,7 +510,7 @@ function toggleWindow() {
     );
 
 
-    /* Update status */
+    /* Change status */
 
     if (status) {
 
@@ -508,24 +521,20 @@ function toggleWindow() {
     }
 
 
-    /* Stop any old timer first */
+    /* Stop any old timer */
 
     if (countdownInterval !== null) {
 
-        clearInterval(
-            countdownInterval
-        );
+        clearInterval(countdownInterval);
 
         countdownInterval = null;
     }
 
 
-    /* Start countdown immediately */
+    /* Start countdown */
 
     updateCountdown();
 
-
-    /* Start ONE countdown interval */
 
     countdownInterval =
         setInterval(
@@ -534,9 +543,23 @@ function toggleWindow() {
         );
 
 
-    /* Save open state */
+    /* Save locally */
 
     saveData();
+
+
+    /* Save OPEN state to Supabase */
+
+    if (
+        typeof uploadMedTransferState ===
+        "function"
+    ) {
+
+        await uploadMedTransferState();
+    }
+
+
+    updateDashboard();
 }
 
 /* ========================= COUNTDOWN ========================= */
@@ -555,15 +578,12 @@ function updateCountdown() {
 
 
     /* =========================================
-       IF WINDOW IS CLOSED
+       WINDOW IS CLOSED
     ========================================= */
 
     if (!transferWindowOpen) {
 
-        /*
-           Make absolutely sure no countdown
-           continues running.
-        */
+        /* Kill any timer that might still exist */
 
         if (countdownInterval !== null) {
 
@@ -606,15 +626,13 @@ function updateCountdown() {
 
 
     /* =========================================
-       DEADLINE REACHED
+       DEADLINE PASSED
     ========================================= */
 
     if (difference <= 0) {
 
         transferWindowOpen = false;
 
-
-        /* Stop timer */
 
         if (countdownInterval !== null) {
 
@@ -626,12 +644,7 @@ function updateCountdown() {
         }
 
 
-        /* Save closed state */
-
-        localStorage.setItem(
-            "transferWindowOpen",
-            "false"
-        );
+        saveData();
 
 
         if (status) {
@@ -650,14 +663,26 @@ function updateCountdown() {
         }
 
 
-        saveData();
+        /*
+           Also tell Supabase that the
+           window has automatically closed.
+        */
+
+        if (
+            typeof uploadMedTransferState ===
+            "function"
+        ) {
+
+            uploadMedTransferState();
+        }
+
 
         return;
     }
 
 
     /* =========================================
-       CALCULATE REMAINING TIME
+       CALCULATE TIME
     ========================================= */
 
     let days =
@@ -698,7 +723,7 @@ function updateCountdown() {
 
 
     /* =========================================
-       DISPLAY COUNTDOWN
+       DISPLAY
     ========================================= */
 
     if (status) {
@@ -724,6 +749,9 @@ function updateCountdown() {
             " Seconds Remaining";
     }
 }
+
+
+
 
 /* ========================= MANAGER LOGIN ========================= */
 
@@ -766,7 +794,7 @@ function loginAdmin() {
   if (password === adminPassword) {
     adminLoggedIn = true;
 
-    document.getElementById("adminStatus").innerHTML = "âœ… Admin Logged In";
+    document.getElementById("adminStatus").innerHTML = "✅Admin Logged In";
 
     document.getElementById("adminResetBtn").style.display = "inline-block";
 
@@ -1195,11 +1223,60 @@ async function downloadMedTransferState() {
         /* Update website */
 
         updateDashboard();
-        showSquad();
 
-        restoreSignedButtons();
+showSquad();
 
-        updateCountdown();
+restoreSignedButtons();
+
+
+/* =========================================
+   RESTORE TRANSFER WINDOW CORRECTLY
+========================================= */
+
+if (transferWindowOpen) {
+
+    updateCountdown();
+
+} else {
+
+    /* Make sure no old timer survives */
+
+    if (countdownInterval !== null) {
+
+        clearInterval(
+            countdownInterval
+        );
+
+        countdownInterval = null;
+    }
+
+
+    let status =
+        document.getElementById(
+            "windowStatus"
+        );
+
+    let countdown =
+        document.getElementById(
+            "countdown"
+        );
+
+
+    if (status) {
+
+        status.innerHTML =
+            "🔴 TRANSFER WINDOW CLOSED";
+
+        status.style.color = "red";
+    }
+
+
+    if (countdown) {
+
+        countdown.innerHTML =
+            "Transfer window is closed.";
+    }
+}
 
         console.log(
             "✅ MedTransfer cloud data loaded."
