@@ -401,70 +401,328 @@ function updateDashboard() {
 /* ========================= TRANSFER WINDOW ========================= */
 
 function toggleWindow() {
-  if (!adminLoggedIn) {
-    alert("Only Admin can open or close the transfer window.");
-    return;
-  }
-  transferWindowOpen = !transferWindowOpen;
 
-  let status = document.getElementById("windowStatus");
+    /* Only Admin can control the transfer window */
+    if (!adminLoggedIn) {
 
-  if (transferWindowOpen) {
-    status.innerHTML = "\uD83D\uDFE2 TRANSFER WINDOW OPEN";
+        alert(
+            "Only Admin can open or close the transfer window."
+        );
 
-    status.style.color = "green";
-  } else {
-    status.innerHTML = "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
+        return;
+    }
 
-    status.style.color = "red";
-  }
 
-  updateDashboard();
+    let status =
+        document.getElementById("windowStatus");
+
+    let countdown =
+        document.getElementById("countdown");
+
+
+    /* =========================================
+       CLOSE TRANSFER WINDOW
+    ========================================= */
+
+    if (transferWindowOpen) {
+
+        transferWindowOpen = false;
+
+
+        /* Stop EVERY countdown interval */
+        if (countdownInterval !== null) {
+
+            clearInterval(
+                countdownInterval
+            );
+
+            countdownInterval = null;
+        }
+
+
+        /* Update status */
+
+        if (status) {
+
+            status.innerHTML =
+                "🔴 TRANSFER WINDOW CLOSED";
+
+            status.style.color = "red";
+        }
+
+
+        /* Keep countdown stopped */
+
+        if (countdown) {
+
+            countdown.innerHTML =
+                "Transfer window is closed.";
+        }
+
+
+        /* Save closed state */
+
+        saveData();
+
+
+        return;
+    }
+
+
+    /* =========================================
+       OPEN TRANSFER WINDOW
+    ========================================= */
+
+    transferWindowOpen = true;
+
+
+    /*
+       IMPORTANT:
+       Opening the market starts a NEW 14-day
+       transfer period.
+    */
+
+    deadline = new Date();
+
+    deadline.setDate(
+        deadline.getDate() + 14
+    );
+
+
+    /* Save the new deadline */
+
+    localStorage.setItem(
+        "transferDeadline",
+        deadline.toISOString()
+    );
+
+
+    /* Update status */
+
+    if (status) {
+
+        status.innerHTML =
+            "🟢 TRANSFER WINDOW OPEN";
+
+        status.style.color = "green";
+    }
+
+
+    /* Stop any old timer first */
+
+    if (countdownInterval !== null) {
+
+        clearInterval(
+            countdownInterval
+        );
+
+        countdownInterval = null;
+    }
+
+
+    /* Start countdown immediately */
+
+    updateCountdown();
+
+
+    /* Start ONE countdown interval */
+
+    countdownInterval =
+        setInterval(
+            updateCountdown,
+            1000
+        );
+
+
+    /* Save open state */
+
+    saveData();
 }
 
 /* ========================= COUNTDOWN ========================= */
 
 function updateCountdown() {
-  const now = new Date();
 
-  const difference = deadline - now;
+    let status =
+        document.getElementById(
+            "windowStatus"
+        );
 
-  if (difference <= 0) {
-    transferWindowOpen = false;
+    let countdown =
+        document.getElementById(
+            "countdown"
+        );
 
-    document.getElementById("windowStatus").innerHTML =
-      "\uD83D\uDD34 TRANSFER WINDOW CLOSED";
 
-    document.getElementById("windowStatus").style.color = "red";
+    /* =========================================
+       IF WINDOW IS CLOSED
+    ========================================= */
 
-    document.getElementById("countdown").innerHTML =
-      "Transfer deadline has passed.";
+    if (!transferWindowOpen) {
 
-    updateDashboard();
+        /*
+           Make absolutely sure no countdown
+           continues running.
+        */
 
-    return;
-  }
+        if (countdownInterval !== null) {
 
-  let days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            clearInterval(
+                countdownInterval
+            );
 
-  let hours = Math.floor(
-    (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-  );
+            countdownInterval = null;
+        }
 
-  let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
 
-  let seconds = Math.floor((difference % (1000 * 60)) / 1000);
+        if (status) {
 
-  document.getElementById("countdown").innerHTML =
-    "⌛" +
-    days +
-    " Days " +
-    hours +
-    " Hours " +
-    minutes +
-    " Minutes " +
-    seconds +
-    " Seconds Remaining";
+            status.innerHTML =
+                "🔴 TRANSFER WINDOW CLOSED";
+
+            status.style.color = "red";
+        }
+
+
+        if (countdown) {
+
+            countdown.innerHTML =
+                "Transfer window is closed.";
+        }
+
+
+        return;
+    }
+
+
+    /* =========================================
+       WINDOW IS OPEN
+    ========================================= */
+
+    const now = new Date();
+
+    const difference =
+        deadline - now;
+
+
+    /* =========================================
+       DEADLINE REACHED
+    ========================================= */
+
+    if (difference <= 0) {
+
+        transferWindowOpen = false;
+
+
+        /* Stop timer */
+
+        if (countdownInterval !== null) {
+
+            clearInterval(
+                countdownInterval
+            );
+
+            countdownInterval = null;
+        }
+
+
+        /* Save closed state */
+
+        localStorage.setItem(
+            "transferWindowOpen",
+            "false"
+        );
+
+
+        if (status) {
+
+            status.innerHTML =
+                "🔴 TRANSFER WINDOW CLOSED";
+
+            status.style.color = "red";
+        }
+
+
+        if (countdown) {
+
+            countdown.innerHTML =
+                "Transfer window is closed.";
+        }
+
+
+        saveData();
+
+        return;
+    }
+
+
+    /* =========================================
+       CALCULATE REMAINING TIME
+    ========================================= */
+
+    let days =
+        Math.floor(
+            difference /
+            (1000 * 60 * 60 * 24)
+        );
+
+
+    let hours =
+        Math.floor(
+            (
+                difference %
+                (1000 * 60 * 60 * 24)
+            ) /
+            (1000 * 60 * 60)
+        );
+
+
+    let minutes =
+        Math.floor(
+            (
+                difference %
+                (1000 * 60 * 60)
+            ) /
+            (1000 * 60)
+        );
+
+
+    let seconds =
+        Math.floor(
+            (
+                difference %
+                (1000 * 60)
+            ) /
+            1000
+        );
+
+
+    /* =========================================
+       DISPLAY COUNTDOWN
+    ========================================= */
+
+    if (status) {
+
+        status.innerHTML =
+            "🟢 TRANSFER WINDOW OPEN";
+
+        status.style.color = "green";
+    }
+
+
+    if (countdown) {
+
+        countdown.innerHTML =
+            "⏳ " +
+            days +
+            " Days " +
+            hours +
+            " Hours " +
+            minutes +
+            " Minutes " +
+            seconds +
+            " Seconds Remaining";
+    }
 }
 
 /* ========================= MANAGER LOGIN ========================= */
